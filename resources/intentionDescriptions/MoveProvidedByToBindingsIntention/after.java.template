@@ -1,0 +1,6 @@
+public class X {
+
+}
+
+
+bind(X.class).toProvider(XProvider.class).in(ServletScopes.SESSION)

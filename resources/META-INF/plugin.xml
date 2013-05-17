@@ -1,0 +1,60 @@
+<idea-plugin url="http://www.sixthandredriver.com/guiceyidea.html" version="2">
+    <name>GuiceyIDEA</name>
+    <description>IDEA Support for Guice, Google's inversion-of-control container</description>
+    <version>8.0</version>
+    <depends>com.intellij.properties</depends>
+    <vendor url="http://www.sixthandredriver.com" email="info@sixthandredriver.com">Sixth and Red River Software</vendor>
+    <idea-version since-build="5600"/>
+    <actions>
+        <group id="GuiceActionGroup" class="com.sixrr.guiceyidea.actions.GuiceActionGroup" text="Google Guice">
+            <action id="NewGuiceModule" class="com.sixrr.guiceyidea.actions.NewGuiceModuleAction" text="Guice Module"
+                    description="New Guice Module"/>
+            <action id="NewGuiceProvider" class="com.sixrr.guiceyidea.actions.NewGuiceProviderAction"
+                    text="Guice Provider"
+                    description="New Guice Provider"/>
+            <action id="NewGuiceBindingAnnotation" class="com.sixrr.guiceyidea.actions.NewGuiceBindingAnnotationAction"
+                    text="Guice Binding Annotation"
+                    description="New Guice Binding Annotation"/>
+            <action id="NewGuiceScopeAnnotation" class="com.sixrr.guiceyidea.actions.NewGuiceScopeAnnotationAction"
+                    text="Guice Scope Annotation"
+                    description="New Guice Scope Annotation"/>
+            <action id="NewGuiceMethodInterceptor" class="com.sixrr.guiceyidea.actions.NewGuiceMethodInterceptorAction"
+                    text="Guice Method Interceptor"
+                    description="New Guice Method Interceptor"/>
+            <add-to-group group-id="NewGroup" anchor="last"/>
+        </group>
+    </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <errorHandler implementation="com.intellij.diagnostic.ITNReporter" />
+    <inspectionToolProvider implementation="com.sixrr.guiceyidea.GuiceyIDEAInspections"/>
+
+    <intentionAction>
+      <bundleName>com.sixrr.guiceyidea.GuiceyIDEABundle</bundleName>
+      <categoryKey>guice.intentions</categoryKey>
+      <className>com.sixrr.guiceyidea.intentions.ToggleInjectionRequiredIntention</className>
+    </intentionAction>
+
+    <intentionAction>
+      <bundleName>com.sixrr.guiceyidea.GuiceyIDEABundle</bundleName>
+      <categoryKey>guice.intentions</categoryKey>
+      <className>com.sixrr.guiceyidea.intentions.MoveBindingScopeToClassIntention</className>
+    </intentionAction>
+
+    <intentionAction>
+      <bundleName>com.sixrr.guiceyidea.GuiceyIDEABundle</bundleName>
+      <categoryKey>guice.intentions</categoryKey>
+      <className>com.sixrr.guiceyidea.intentions.MoveBindingToClassIntention</className>
+    </intentionAction>
+
+    <intentionAction>
+      <bundleName>com.sixrr.guiceyidea.GuiceyIDEABundle</bundleName>
+      <categoryKey>guice.intentions</categoryKey>
+      <className>com.sixrr.guiceyidea.intentions.MoveProviderBindingToClassIntention</className>
+    </intentionAction>
+
+    <!-- TODO[yole] uncomment when I figure out how it's meant to work
+    <psi.referenceContributor implementation="com.sixrr.guiceyidea.GuiceyIDEAReferenceContributor"/>
+    -->
+  </extensions>
+</idea-plugin>
