@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="google-guice">
+    <output-path>$PROJECT_DIR$/out/artifacts/google_guice</output-path>
+    <root id="root">
+      <element id="directory" name="google-guice">
+        <element id="directory" name="lib">
+          <element id="archive" name="google-guice.jar">
+            <element id="module-output" name="consulo-google-guice" />
+          </element>
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

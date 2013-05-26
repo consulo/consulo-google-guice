@@ -16,20 +16,24 @@
 
 package com.sixrr.guiceyidea.reference;
 
-import com.intellij.lang.properties.PropertiesUtil;
-import com.intellij.lang.properties.psi.Property;
-import com.intellij.openapi.util.TextRange;
-import com.intellij.psi.*;
-import com.intellij.psi.infos.CandidateInfo;
-import com.intellij.util.IncorrectOperationException;
-import com.sixrr.guiceyidea.utils.MutationUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.lang.properties.IProperty;
+import com.intellij.lang.properties.PropertiesUtil;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiLiteralExpression;
+import com.intellij.psi.PsiPolyVariantReference;
+import com.intellij.psi.ResolveResult;
+import com.intellij.psi.infos.CandidateInfo;
+import com.intellij.util.IncorrectOperationException;
+import com.sixrr.guiceyidea.utils.MutationUtils;
 
 class NamedReference implements PsiPolyVariantReference{
     private final PsiLiteralExpression element;
@@ -56,13 +60,13 @@ class NamedReference implements PsiPolyVariantReference{
         final String text = element.getText();
         final String strippedText = text.substring(1, text.length() - 1);
       // TODO[yole] figure out what was meant here. this never works and never could have worked.
-        final List<Property> properties =
+        final List<IProperty> properties =
                 PropertiesUtil.findAllProperties(element.getProject(), null, strippedText);
-        final Set<Property> propertySet = new HashSet<Property>(properties);
+        final Set<IProperty> propertySet = new HashSet<IProperty>(properties);
         final ResolveResult[] out = new ResolveResult[propertySet.size()];
         int i = 0;
-        for(Property property : propertySet){
-            out[i] = new CandidateInfo(property, null);
+        for(IProperty property : propertySet){
+            out[i] = new CandidateInfo(property.getPsiElement(), null);
             i++;
         }
 
@@ -94,9 +98,9 @@ class NamedReference implements PsiPolyVariantReference{
 
     public Object[] getVariants(){
         // TODO[yole] figure out what was meant here. this never works and never could have worked.
-        final List<Property> properties = PropertiesUtil.findAllProperties(element.getProject(), null, null);
+        final List<IProperty> properties = PropertiesUtil.findAllProperties(element.getProject(), null, null);
         final List<Object> out = new ArrayList<Object>();
-        for(Property property : properties){
+        for(IProperty property : properties){
             out.add(property.getName());
         }
 

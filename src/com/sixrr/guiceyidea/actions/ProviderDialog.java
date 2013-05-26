@@ -16,25 +16,32 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import com.intellij.ide.util.TreeClassChooserDialog;
+import java.awt.BorderLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.Nullable;
+import com.intellij.ide.util.TreeClassChooser;
+import com.intellij.ide.util.TreeJavaClassChooserDialog;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.FixedSizeButton;
 import com.intellij.psi.JavaPsiFacade;
 import com.intellij.psi.PsiClass;
-import com.intellij.psi.PsiManager;
 import com.intellij.psi.PsiNameHelper;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
-
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ProviderDialog extends DialogWrapper implements DocumentListener{
     private JTextField providerNameField = null;
@@ -85,16 +92,16 @@ public class ProviderDialog extends DialogWrapper implements DocumentListener{
         classChooserButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 final GlobalSearchScope scope = GlobalSearchScope.allScope(project);
-                final TreeClassChooserDialog chooser = new TreeClassChooserDialog(
+                final TreeClassChooser chooser = new TreeJavaClassChooserDialog(
                         GuiceyIDEABundle.message("select.provided.class"), project, scope, null, null);
                 final String classText = classChooserButton.getText();
                 final PsiClass currentClass =
                         JavaPsiFacade.getInstance(project).findClass(classText, GlobalSearchScope.allScope(project));
                 if(currentClass != null){
-                    chooser.selectClass(currentClass);
+                    chooser.select(currentClass);
                 }
-                chooser.show();
-                final PsiClass selectedClass = chooser.getSelectedClass();
+                chooser.showDialog();
+                final PsiClass selectedClass = chooser.getSelected();
                 if(selectedClass != null){
                     final String className = selectedClass.getQualifiedName();
                     providedClassField.setText(className);

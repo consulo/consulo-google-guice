@@ -35,8 +35,8 @@ public class GuiceActionGroup extends DefaultActionGroup {
   }
 
   public void update(AnActionEvent e) {
-    final IdeView view = e.getData(DataKeys.IDE_VIEW);
-    final Project project = e.getData(DataKeys.PROJECT);
+    final IdeView view = e.getData(LangDataKeys.IDE_VIEW);
+    final Project project = e.getData(LangDataKeys.PROJECT);
     final Presentation presentation = e.getPresentation();
     if (project != null && view != null) {
       final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();

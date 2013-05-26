@@ -16,17 +16,24 @@
 
 package com.sixrr.guiceyidea.utils;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
+import com.intellij.psi.JavaPsiFacade;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiClassType;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiManager;
+import com.intellij.psi.PsiModifier;
+import com.intellij.psi.PsiType;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.psi.util.InheritanceUtil;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.psi.util.TypeConversionUtil;
-import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class ClassUtils{
 
@@ -92,7 +99,7 @@ public class ClassUtils{
         final GlobalSearchScope scope = GlobalSearchScope.allScope(project);
         final PsiClass ancestorClass =
                 JavaPsiFacade.getInstance(project).findClass(ancestorName, scope);
-        return InheritanceUtil.isCorrectDescendant(aClass, ancestorClass, true);
+        return InheritanceUtil.isInheritorOrSelf(aClass, ancestorClass, true);
     }
 
     public static boolean isPrimitive(PsiType type){

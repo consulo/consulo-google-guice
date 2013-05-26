@@ -16,11 +16,13 @@
 
 package com.sixrr.guiceyidea.actions;
 
+import javax.swing.Icon;
+
+import org.jetbrains.annotations.NotNull;
 import com.intellij.ide.IdeView;
 import com.intellij.ide.actions.CreateElementActionBase;
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.DataConstants;
-import com.intellij.openapi.actionSystem.DataContext;
+import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
@@ -29,9 +31,6 @@ import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
 
 public abstract class GeneratePluginClassAction extends CreateElementActionBase{
 
@@ -66,9 +65,8 @@ public abstract class GeneratePluginClassAction extends CreateElementActionBase{
         if(!presentation.isEnabled()){
             return;
         }
-        final DataContext context = e.getDataContext();
-        final IdeView view = (IdeView) context.getData(DataConstants.IDE_VIEW);
-        final Project project = (Project) context.getData(DataConstants.PROJECT);
+        final IdeView view = e.getData(LangDataKeys.IDE_VIEW);
+        final Project project = e.getData(LangDataKeys.PROJECT);
         if(view == null || project == null){
             presentation.setEnabled(false);
             presentation.setVisible(false);

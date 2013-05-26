@@ -16,13 +16,13 @@
 
 package com.sixrr.guiceyidea.utils;
 
+import org.jetbrains.annotations.NonNls;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.psi.search.GlobalSearchScope;
 import com.intellij.util.IncorrectOperationException;
-import org.jetbrains.annotations.NonNls;
 
 public class MutationUtils{
     private MutationUtils(){
@@ -71,7 +71,7 @@ public class MutationUtils{
         final PsiExpression newCall =
                 facade.createExpressionFromText(expString, null);
         final PsiElement insertedElement = expressionToReplace.replace(newCall);
-        final CodeStyleManager codeStyleManager = mgr.getCodeStyleManager();
+        final CodeStyleManager codeStyleManager = CodeStyleManager.getInstance(mgr.getProject());
         codeStyleManager.reformat(insertedElement);
     }
 
@@ -85,7 +85,7 @@ public class MutationUtils{
                 factory.createTypeFromText(newExpression, null);
         final PsiTypeElement newTypeElement = factory.createTypeElement(newType);
         final PsiElement insertedElement = typeElement.replace(newTypeElement);
-        final CodeStyleManager codeStyleManager = mgr.getCodeStyleManager();
+        final CodeStyleManager codeStyleManager = CodeStyleManager.getInstance(mgr.getProject());
         final PsiElement shortenedElement = JavaCodeStyleManager.getInstance(project).shortenClassReferences(insertedElement);
         codeStyleManager.reformat(shortenedElement);
     }
@@ -99,7 +99,7 @@ public class MutationUtils{
         final PsiExpression newCall =
                 factory.createExpressionFromText(newExpression, null);
         final PsiElement insertedElement = exp.replace(newCall);
-        final CodeStyleManager codeStyleManager = mgr.getCodeStyleManager();
+        final CodeStyleManager codeStyleManager = CodeStyleManager.getInstance(mgr.getProject());
         final PsiElement shortenedElement = JavaCodeStyleManager.getInstance(project).shortenClassReferences(insertedElement);
         return (PsiExpression) codeStyleManager.reformat(shortenedElement);
     }
@@ -116,7 +116,7 @@ public class MutationUtils{
             return;
         }
         final PsiElement insertedElement = exp.replace(newCall);
-        final CodeStyleManager codeStyleManager = mgr.getCodeStyleManager();
+        final CodeStyleManager codeStyleManager = CodeStyleManager.getInstance(mgr.getProject());
         final PsiElement shortenedElement = JavaCodeStyleManager.getInstance(project).shortenClassReferences(insertedElement);
         codeStyleManager.reformat(shortenedElement);
     }
@@ -134,7 +134,7 @@ public class MutationUtils{
         final PsiElement insertedElement = reference.replace(newReference);
         JavaCodeStyleManager codeStyleManager = JavaCodeStyleManager.getInstance(project);
         final PsiElement shortenedElement = codeStyleManager.shortenClassReferences(insertedElement);
-        mgr.getCodeStyleManager().reformat(shortenedElement);
+		CodeStyleManager.getInstance(mgr.getProject()).reformat(shortenedElement);
     }
 
     public static void replaceStatement(String newStatement,
@@ -148,7 +148,7 @@ public class MutationUtils{
         final PsiElement insertedElement = statement.replace(newCall);
         JavaCodeStyleManager codeStyleManager = JavaCodeStyleManager.getInstance(project);
         final PsiElement shortenedElement = codeStyleManager.shortenClassReferences(insertedElement);
-        mgr.getCodeStyleManager().reformat(shortenedElement);
+		CodeStyleManager.getInstance(mgr.getProject()).reformat(shortenedElement);
     }
 
     public static void addAnnotation(PsiModifierListOwner owner, String annotation) throws IncorrectOperationException{

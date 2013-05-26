@@ -16,16 +16,20 @@
 
 package com.sixrr.guiceyidea.actions;
 
+import java.io.IOException;
+
+import org.jetbrains.annotations.NotNull;
+import com.intellij.ide.highlighter.JavaFileType;
 import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiDirectory;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.PsiFileFactory;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.codeStyle.JavaCodeStyleManager;
 import com.intellij.util.IncorrectOperationException;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 
 public class NewGuiceProviderAction extends GeneratePluginClassAction{
 
@@ -67,7 +71,7 @@ public class NewGuiceProviderAction extends GeneratePluginClassAction{
             return PsiElement.EMPTY_ARRAY;
         }
         try{
-            final PsiFile newFile = elementFactory.createFileFromText(newName + ".java", beanClassString);
+            final PsiFile newFile = elementFactory.createFileFromText(newName + ".java", JavaFileType.INSTANCE, beanClassString);
             final JavaCodeStyleManager codeStyleManager = JavaCodeStyleManager.getInstance(project);
             final PsiElement shortenedFile = codeStyleManager.shortenClassReferences(newFile);
             final PsiElement reformattedFile = CodeStyleManager.getInstance(project).reformat(shortenedFile);
