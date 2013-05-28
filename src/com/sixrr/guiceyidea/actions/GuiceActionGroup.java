@@ -17,37 +17,56 @@
 package com.sixrr.guiceyidea.actions;
 
 import com.intellij.ide.IdeView;
-import com.intellij.openapi.actionSystem.*;
+import com.intellij.openapi.actionSystem.AnActionEvent;
+import com.intellij.openapi.actionSystem.DefaultActionGroup;
+import com.intellij.openapi.actionSystem.LangDataKeys;
+import com.intellij.openapi.actionSystem.Presentation;
+import com.intellij.openapi.module.Module;
+import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.roots.ProjectFileIndex;
 import com.intellij.openapi.roots.ProjectRootManager;
-import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.JavaDirectoryService;
+import com.intellij.psi.PsiDirectory;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import com.sixrr.guiceyidea.utils.IconHelper;
+import com.sixrr.guiceyidea.GuiceyIDEAIcons;
+import com.sixrr.guiceyidea.module.extension.GuiceyIDEAModuleExtension;
 
-public class GuiceActionGroup extends DefaultActionGroup {
-  public GuiceActionGroup() {
-    super(GuiceyIDEABundle.message("action.group.guice.title"), true);
-    final Presentation presentation = getTemplatePresentation();
-    presentation.setDescription(GuiceyIDEABundle.message("action.group.guice.description"));
-    presentation.setIcon(IconHelper.getIcon("/icons/google-small.png"));
-  }
+public class GuiceActionGroup extends DefaultActionGroup
+{
+	public GuiceActionGroup()
+	{
+		super(GuiceyIDEABundle.message("action.group.guice.title"), true);
+		final Presentation presentation = getTemplatePresentation();
+		presentation.setDescription(GuiceyIDEABundle.message("action.group.guice.description"));
+		presentation.setIcon(GuiceyIDEAIcons.GUICE_LOGO);
+	}
 
-  public void update(AnActionEvent e) {
-    final IdeView view = e.getData(LangDataKeys.IDE_VIEW);
-    final Project project = e.getData(LangDataKeys.PROJECT);
-    final Presentation presentation = e.getPresentation();
-    if (project != null && view != null) {
-      final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-      final PsiDirectory[] dirs = view.getDirectories();
-      for (PsiDirectory dir : dirs) {
-        if (projectFileIndex.isInSourceContent(dir.getVirtualFile()) && JavaDirectoryService.getInstance().getPackage(dir) != null) {
-          presentation.setVisible(true);
-          return;
-        }
-      }
-    }
-    presentation.setVisible(false);
-  }
+	@Override
+	public void update(AnActionEvent e)
+	{
+		final Module module = e.getData(LangDataKeys.MODULE);
+		if(module == null || ModuleUtilCore.getExtension(module, GuiceyIDEAModuleExtension.class) != null)
+		{
+			return;
+		}
+
+		final IdeView view = e.getData(LangDataKeys.IDE_VIEW);
+		final Project project = e.getData(LangDataKeys.PROJECT);
+		final Presentation presentation = e.getPresentation();
+		if(project != null && view != null)
+		{
+			final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
+			final PsiDirectory[] dirs = view.getDirectories();
+			for(PsiDirectory dir : dirs)
+			{
+				if(projectFileIndex.isInSourceContent(dir.getVirtualFile()) && JavaDirectoryService.getInstance().getPackage(dir) != null)
+				{
+					presentation.setVisible(true);
+					return;
+				}
+			}
+		}
+		presentation.setVisible(false);
+	}
 }

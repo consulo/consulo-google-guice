@@ -18,6 +18,7 @@
 	</actions>
 
 	<extensions defaultExtensionNs="com.intellij">
+		<moduleExtensionProvider key="google-guice" parent-key="java" implementationClass="com.sixrr.guiceyidea.module.extension.GuiceyIDEAModuleExtensionProvider" />
 		<errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
 		<inspectionToolProvider implementation="com.sixrr.guiceyidea.GuiceyIDEAInspections"/>
 

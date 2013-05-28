@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
-  <artifact build-on-make="true" name="google-guice">
-    <output-path>$PROJECT_DIR$/out/artifacts/google_guice</output-path>
+  <artifact build-on-make="true" name="dist">
+    <output-path>$PROJECT_DIR$/out/artifacts/dist</output-path>
     <root id="root">
       <element id="directory" name="google-guice">
         <element id="directory" name="lib">
