@@ -6,6 +6,7 @@ import org.consulo.module.extension.MutableModuleExtension;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.module.Module;
+import com.intellij.openapi.roots.ModifiableRootModel;
 
 /**
  * @author VISTALL
@@ -25,7 +26,7 @@ public class GuiceyIDEAMutableModuleExtension extends GuiceyIDEAModuleExtension 
 
 	@Nullable
 	@Override
-	public JComponent createConfigurablePanel(@Nullable Runnable runnable)
+	public JComponent createConfigurablePanel(@NotNull ModifiableRootModel modifiableRootModel, @Nullable Runnable runnable)
 	{
 		return null;
 	}
