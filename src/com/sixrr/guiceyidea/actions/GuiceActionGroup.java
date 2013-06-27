@@ -46,15 +46,12 @@ public class GuiceActionGroup extends DefaultActionGroup
 	public void update(AnActionEvent e)
 	{
 		final Module module = e.getData(LangDataKeys.MODULE);
-		if(module == null || ModuleUtilCore.getExtension(module, GuiceyIDEAModuleExtension.class) == null)
-		{
-			return;
-		}
-
 		final IdeView view = e.getData(LangDataKeys.IDE_VIEW);
 		final Project project = e.getData(LangDataKeys.PROJECT);
 		final Presentation presentation = e.getPresentation();
-		if(project != null && view != null)
+
+		boolean visible = false;
+		if(module != null && ModuleUtilCore.getExtension(module, GuiceyIDEAModuleExtension.class) != null && project != null && view != null)
 		{
 			final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
 			final PsiDirectory[] dirs = view.getDirectories();
@@ -62,11 +59,12 @@ public class GuiceActionGroup extends DefaultActionGroup
 			{
 				if(projectFileIndex.isInSourceContent(dir.getVirtualFile()) && JavaDirectoryService.getInstance().getPackage(dir) != null)
 				{
-					presentation.setVisible(true);
-					return;
+					visible = true;
+					break;
 				}
 			}
 		}
-		presentation.setVisible(false);
+
+		presentation.setEnabledAndVisible(visible);
 	}
 }
