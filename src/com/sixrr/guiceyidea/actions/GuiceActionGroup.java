@@ -46,7 +46,7 @@ public class GuiceActionGroup extends DefaultActionGroup
 	public void update(AnActionEvent e)
 	{
 		final Module module = e.getData(LangDataKeys.MODULE);
-		if(module == null || ModuleUtilCore.getExtension(module, GuiceyIDEAModuleExtension.class) != null)
+		if(module == null || ModuleUtilCore.getExtension(module, GuiceyIDEAModuleExtension.class) == null)
 		{
 			return;
 		}
