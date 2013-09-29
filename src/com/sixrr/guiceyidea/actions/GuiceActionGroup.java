@@ -16,6 +16,7 @@
 
 package com.sixrr.guiceyidea.actions;
 
+import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeView;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
@@ -29,7 +30,6 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import com.sixrr.guiceyidea.GuiceyIDEAIcons;
 import com.sixrr.guiceyidea.module.extension.GuiceyIDEAModuleExtension;
 
 public class GuiceActionGroup extends DefaultActionGroup
@@ -39,7 +39,7 @@ public class GuiceActionGroup extends DefaultActionGroup
 		super(GuiceyIDEABundle.message("action.group.guice.title"), true);
 		final Presentation presentation = getTemplatePresentation();
 		presentation.setDescription(GuiceyIDEABundle.message("action.group.guice.description"));
-		presentation.setIcon(GuiceyIDEAIcons.GUICE_LOGO);
+		presentation.setIcon(AllIcons.Providers.Google);
 	}
 
 	@Override

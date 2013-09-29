@@ -5,8 +5,8 @@ import javax.swing.Icon;
 import org.consulo.module.extension.ModuleExtensionProvider;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import com.intellij.icons.AllIcons;
 import com.intellij.openapi.module.Module;
-import com.sixrr.guiceyidea.GuiceyIDEAIcons;
 
 /**
  * @author VISTALL
@@ -18,7 +18,7 @@ public class GuiceyIDEAModuleExtensionProvider implements ModuleExtensionProvide
 	@Override
 	public Icon getIcon()
 	{
-		return GuiceyIDEAIcons.GUICE_LOGO;
+		return AllIcons.Providers.Google;
 	}
 
 	@NotNull
