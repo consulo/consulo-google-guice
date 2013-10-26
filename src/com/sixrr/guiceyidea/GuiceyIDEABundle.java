@@ -13,23 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.sixrr.guiceyidea;
 
-import com.intellij.CommonBundle;
-import org.jetbrains.annotations.PropertyKey;
+import org.consulo.lombok.annotations.Bundle;
 
-import java.util.ResourceBundle;
-
-public class GuiceyIDEABundle{
-    private static final ResourceBundle ourBundle =
-            ResourceBundle.getBundle("com.sixrr.guiceyidea.GuiceyIDEABundle");
-
-    private GuiceyIDEABundle(){
-    }
-
-    public static String message(@PropertyKey(resourceBundle = "com.sixrr.guiceyidea.GuiceyIDEABundle")String key,
-                                 Object... params){
-        return CommonBundle.message(ourBundle, key, params);
-    }
+@Bundle("com.sixrr.guiceyidea.GuiceyIDEABundle")
+public class GuiceyIDEABundle
+{
 }

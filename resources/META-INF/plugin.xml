@@ -4,7 +4,6 @@
 	<version>8.0</version>
 	<depends>com.intellij.properties</depends>
 	<depends>org.consulo.java</depends>
-	<depends>org.consulo.java.platform</depends>
 	<vendor url="http://www.sixthandredriver.com" email="info@sixthandredriver.com">Sixth and Red River Software</vendor>
 	<actions>
 		<group id="GuiceActionGroup" class="com.sixrr.guiceyidea.actions.GuiceActionGroup" text="Google Guice">
