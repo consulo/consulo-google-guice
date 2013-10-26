@@ -16,12 +16,13 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import com.intellij.ide.fileTemplates.FileTemplate;
-import com.intellij.ide.fileTemplates.FileTemplateManager;
-import org.jetbrains.annotations.NonNls;
-
 import java.io.IOException;
 import java.util.Properties;
+
+import org.jetbrains.annotations.NonNls;
+import com.intellij.ide.fileTemplates.FileTemplate;
+import com.intellij.ide.fileTemplates.FileTemplateManager;
+import com.intellij.ide.fileTemplates.JavaTemplateUtil;
 
 public class GuiceBindingAnnotationBuilder{
     private String className = null;
@@ -35,7 +36,7 @@ public class GuiceBindingAnnotationBuilder{
         final FileTemplateManager templateManager = FileTemplateManager.getInstance();
         FileTemplate headerTemplate;
         try{
-            headerTemplate = templateManager.getInternalTemplate(FileTemplateManager.FILE_HEADER_TEMPLATE_NAME);
+            headerTemplate = templateManager.getInternalTemplate(JavaTemplateUtil.FILE_HEADER_TEMPLATE_NAME);
         } catch(Exception e){
             headerTemplate = null;
         }
