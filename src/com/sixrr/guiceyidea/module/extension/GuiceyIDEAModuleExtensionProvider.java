@@ -30,13 +30,6 @@ public class GuiceyIDEAModuleExtensionProvider implements ModuleExtensionProvide
 
 	@NotNull
 	@Override
-	public Class<GuiceyIDEAModuleExtension> getImmutableClass()
-	{
-		return GuiceyIDEAModuleExtension.class;
-	}
-
-	@NotNull
-	@Override
 	public GuiceyIDEAModuleExtension createImmutable(@NotNull String s, @NotNull Module module)
 	{
 		return new GuiceyIDEAModuleExtension(s, module);
