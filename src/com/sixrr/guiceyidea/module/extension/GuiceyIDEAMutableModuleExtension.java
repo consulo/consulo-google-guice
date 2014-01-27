@@ -14,14 +14,9 @@ import com.intellij.openapi.roots.ModifiableRootModel;
  */
 public class GuiceyIDEAMutableModuleExtension extends GuiceyIDEAModuleExtension implements MutableModuleExtension<GuiceyIDEAModuleExtension>
 {
-	@NotNull
-	private final GuiceyIDEAModuleExtension moduleExtension;
-
-	public GuiceyIDEAMutableModuleExtension(@NotNull String id, @NotNull Module module, @NotNull GuiceyIDEAModuleExtension moduleExtension)
+	public GuiceyIDEAMutableModuleExtension(@NotNull String id, @NotNull Module module)
 	{
 		super(id, module);
-		this.moduleExtension = moduleExtension;
-		commit(moduleExtension);
 	}
 
 	@Nullable
@@ -38,14 +33,8 @@ public class GuiceyIDEAMutableModuleExtension extends GuiceyIDEAModuleExtension 
 	}
 
 	@Override
-	public boolean isModified()
+	public boolean isModified(@NotNull GuiceyIDEAModuleExtension extension)
 	{
-		return myIsEnabled != moduleExtension.isEnabled();
-	}
-
-	@Override
-	public void commit()
-	{
-		moduleExtension.commit(this);
+		return myIsEnabled != extension.isEnabled();
 	}
 }

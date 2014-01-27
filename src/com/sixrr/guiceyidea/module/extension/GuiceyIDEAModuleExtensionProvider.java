@@ -37,8 +37,8 @@ public class GuiceyIDEAModuleExtensionProvider implements ModuleExtensionProvide
 
 	@NotNull
 	@Override
-	public GuiceyIDEAMutableModuleExtension createMutable(@NotNull String s, @NotNull Module module, @NotNull GuiceyIDEAModuleExtension moduleExtension)
+	public GuiceyIDEAMutableModuleExtension createMutable(@NotNull String s, @NotNull Module module)
 	{
-		return new GuiceyIDEAMutableModuleExtension(s, module, moduleExtension);
+		return new GuiceyIDEAMutableModuleExtension(s, module);
 	}
 }
