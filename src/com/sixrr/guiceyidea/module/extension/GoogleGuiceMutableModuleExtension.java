@@ -5,23 +5,22 @@ import javax.swing.JComponent;
 import org.consulo.module.extension.MutableModuleExtension;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import com.intellij.openapi.module.Module;
 import com.intellij.openapi.roots.ModifiableRootModel;
 
 /**
  * @author VISTALL
  * @since 17:33/28.05.13
  */
-public class GuiceyIDEAMutableModuleExtension extends GuiceyIDEAModuleExtension implements MutableModuleExtension<GuiceyIDEAModuleExtension>
+public class GoogleGuiceMutableModuleExtension extends GoogleGuiceModuleExtension implements MutableModuleExtension<GoogleGuiceModuleExtension>
 {
-	public GuiceyIDEAMutableModuleExtension(@NotNull String id, @NotNull Module module)
+	public GoogleGuiceMutableModuleExtension(@NotNull String id, @NotNull ModifiableRootModel module)
 	{
 		super(id, module);
 	}
 
 	@Nullable
 	@Override
-	public JComponent createConfigurablePanel(@NotNull ModifiableRootModel modifiableRootModel, @Nullable Runnable runnable)
+	public JComponent createConfigurablePanel(@Nullable Runnable runnable)
 	{
 		return null;
 	}
@@ -33,7 +32,7 @@ public class GuiceyIDEAMutableModuleExtension extends GuiceyIDEAModuleExtension 
 	}
 
 	@Override
-	public boolean isModified(@NotNull GuiceyIDEAModuleExtension extension)
+	public boolean isModified(@NotNull GoogleGuiceModuleExtension extension)
 	{
 		return myIsEnabled != extension.isEnabled();
 	}

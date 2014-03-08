@@ -30,7 +30,7 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import com.sixrr.guiceyidea.module.extension.GuiceyIDEAModuleExtension;
+import com.sixrr.guiceyidea.module.extension.GoogleGuiceModuleExtension;
 
 public class GuiceActionGroup extends DefaultActionGroup
 {
@@ -51,7 +51,7 @@ public class GuiceActionGroup extends DefaultActionGroup
 		final Presentation presentation = e.getPresentation();
 
 		boolean visible = false;
-		if(module != null && ModuleUtilCore.getExtension(module, GuiceyIDEAModuleExtension.class) != null && project != null && view != null)
+		if(module != null && ModuleUtilCore.getExtension(module, GoogleGuiceModuleExtension.class) != null && project != null && view != null)
 		{
 			final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
 			final PsiDirectory[] dirs = view.getDirectories();

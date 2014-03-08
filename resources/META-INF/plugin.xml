@@ -8,16 +8,25 @@
 	<actions>
 		<group id="GuiceActionGroup" class="com.sixrr.guiceyidea.actions.GuiceActionGroup" text="Google Guice">
 			<action id="NewGuiceModule" class="com.sixrr.guiceyidea.actions.NewGuiceModuleAction" text="Guice Module" description="New Guice Module"/>
-			<action id="NewGuiceProvider" class="com.sixrr.guiceyidea.actions.NewGuiceProviderAction" text="Guice Provider" description="New Guice Provider"/>
-			<action id="NewGuiceBindingAnnotation" class="com.sixrr.guiceyidea.actions.NewGuiceBindingAnnotationAction" text="Guice Binding Annotation" description="New Guice Binding Annotation"/>
-			<action id="NewGuiceScopeAnnotation" class="com.sixrr.guiceyidea.actions.NewGuiceScopeAnnotationAction" text="Guice Scope Annotation" description="New Guice Scope Annotation"/>
-			<action id="NewGuiceMethodInterceptor" class="com.sixrr.guiceyidea.actions.NewGuiceMethodInterceptorAction" text="Guice Method Interceptor" description="New Guice Method Interceptor"/>
+			<action id="NewGuiceProvider" class="com.sixrr.guiceyidea.actions.NewGuiceProviderAction" text="Guice Provider"
+					description="New Guice Provider"/>
+			<action id="NewGuiceBindingAnnotation" class="com.sixrr.guiceyidea.actions.NewGuiceBindingAnnotationAction"
+					text="Guice Binding Annotation" description="New Guice Binding Annotation"/>
+			<action id="NewGuiceScopeAnnotation" class="com.sixrr.guiceyidea.actions.NewGuiceScopeAnnotationAction" text="Guice Scope Annotation"
+					description="New Guice Scope Annotation"/>
+			<action id="NewGuiceMethodInterceptor" class="com.sixrr.guiceyidea.actions.NewGuiceMethodInterceptorAction"
+					text="Guice Method Interceptor" description="New Guice Method Interceptor"/>
 			<add-to-group group-id="NewGroup" anchor="last"/>
 		</group>
 	</actions>
 
 	<extensions defaultExtensionNs="com.intellij">
-		<moduleExtensionProvider key="google-guice" parent-key="java" implementationClass="com.sixrr.guiceyidea.module.extension.GuiceyIDEAModuleExtensionProvider" />
+		<moduleExtensionProvider key="google-guice"
+								 parentKey="java"
+								 icon="/providers/google.png"
+								 name="Google Guice"
+								 immutableClass="com.sixrr.guiceyidea.module.extension.GoogleGuiceModuleExtension"
+								 mutableClass="com.sixrr.guiceyidea.module.extension.GoogleGuiceMutableModuleExtension"/>
 		<errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
 		<inspectionToolProvider implementation="com.sixrr.guiceyidea.GuiceyIDEAInspections"/>
 
