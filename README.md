@@ -1,1 +1,1 @@
-![Build Status](http://must-be.org:8080/vulcan_web/statusImage?name=cconsulo-google-guice)
+![Build Status](http://must-be.org:8080/vulcan_web/statusImage?name=consulo-google-guice)
