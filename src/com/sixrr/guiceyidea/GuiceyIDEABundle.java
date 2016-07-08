@@ -15,7 +15,7 @@
  */
 package com.sixrr.guiceyidea;
 
-import org.consulo.lombok.annotations.Bundle;
+import consulo.lombok.annotations.Bundle;
 
 @Bundle("com.sixrr.guiceyidea.GuiceyIDEABundle")
 public class GuiceyIDEABundle
