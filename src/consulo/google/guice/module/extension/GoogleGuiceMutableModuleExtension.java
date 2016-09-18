@@ -1,12 +1,8 @@
-package com.sixrr.guiceyidea.module.extension;
+package consulo.google.guice.module.extension;
 
-import javax.swing.JComponent;
-
-import org.consulo.module.extension.MutableModuleExtension;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import com.intellij.openapi.roots.ModifiableRootModel;
-import com.intellij.openapi.roots.ModuleRootLayer;
+import consulo.module.extension.MutableModuleExtension;
+import consulo.roots.ModuleRootLayer;
 
 /**
  * @author VISTALL
@@ -17,13 +13,6 @@ public class GoogleGuiceMutableModuleExtension extends GoogleGuiceModuleExtensio
 	public GoogleGuiceMutableModuleExtension(@NotNull String id, @NotNull ModuleRootLayer moduleRootLayer)
 	{
 		super(id, moduleRootLayer);
-	}
-
-	@Nullable
-	@Override
-	public JComponent createConfigurablePanel(@Nullable Runnable runnable)
-	{
-		return null;
 	}
 
 	@Override

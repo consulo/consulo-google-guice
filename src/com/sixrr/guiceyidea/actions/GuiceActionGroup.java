@@ -30,7 +30,7 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import com.sixrr.guiceyidea.module.extension.GoogleGuiceModuleExtension;
+import consulo.google.guice.module.extension.GoogleGuiceModuleExtension;
 
 public class GuiceActionGroup extends DefaultActionGroup
 {

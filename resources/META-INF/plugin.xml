@@ -1,9 +1,10 @@
-<idea-plugin url="http://www.sixthandredriver.com/guiceyidea.html" version="2">
+<idea-plugin>
+	<id>consulo.google.guice</id>
 	<name>GuiceyIDEA</name>
-	<description>IDEA Support for Guice, Google's inversion-of-control container</description>
-	<version>8.0</version>
+	<description>Support for Guice, Google's inversion-of-control container</description>
+	<version>SNAPSHOT</version>
 	<depends>com.intellij.properties</depends>
-	<depends>org.consulo.java</depends>
+	<depends>consulo.java</depends>
 	<vendor url="http://www.sixthandredriver.com" email="info@sixthandredriver.com">Sixth and Red River Software</vendor>
 	<actions>
 		<group id="GuiceActionGroup" class="com.sixrr.guiceyidea.actions.GuiceActionGroup" text="Google Guice">
@@ -25,9 +26,8 @@
 								 parentKey="java"
 								 icon="/providers/google.png"
 								 name="Google Guice"
-								 immutableClass="com.sixrr.guiceyidea.module.extension.GoogleGuiceModuleExtension"
-								 mutableClass="com.sixrr.guiceyidea.module.extension.GoogleGuiceMutableModuleExtension"/>
-		<errorHandler implementation="com.intellij.diagnostic.ITNReporter"/>
+								 immutableClass="consulo.google.guice.module.extension.GoogleGuiceModuleExtension"
+								 mutableClass="consulo.google.guice.module.extension.GoogleGuiceMutableModuleExtension"/>
 		<inspectionToolProvider implementation="com.sixrr.guiceyidea.GuiceyIDEAInspections"/>
 
 		<intentionAction>
