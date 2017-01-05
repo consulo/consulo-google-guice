@@ -1,6 +1,6 @@
 <idea-plugin>
 	<id>consulo.google.guice</id>
-	<name>GuiceyIDEA</name>
+	<name>Google Guice</name>
 	<description>Support for Guice, Google's inversion-of-control container</description>
 	<version>SNAPSHOT</version>
 	<depends>com.intellij.properties</depends>
