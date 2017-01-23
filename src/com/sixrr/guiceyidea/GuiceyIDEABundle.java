@@ -15,9 +15,27 @@
  */
 package com.sixrr.guiceyidea;
 
-import consulo.lombok.annotations.Bundle;
+import org.jetbrains.annotations.PropertyKey;
+import com.intellij.AbstractBundle;
 
-@Bundle("com.sixrr.guiceyidea.GuiceyIDEABundle")
-public class GuiceyIDEABundle
+public class GuiceyIDEABundle extends AbstractBundle
 {
+	private static final String BUNDLE = "com.sixrr.guiceyidea.GuiceyIDEABundle";
+
+	private static final GuiceyIDEABundle ourInstance = new GuiceyIDEABundle();
+
+	private GuiceyIDEABundle()
+	{
+		super(BUNDLE);
+	}
+
+	public static String message(@PropertyKey(resourceBundle = BUNDLE) String key)
+	{
+		return ourInstance.getMessage(key);
+	}
+
+	public static String message(@PropertyKey(resourceBundle = BUNDLE) String key, Object... params)
+	{
+		return ourInstance.getMessage(key, params);
+	}
 }
