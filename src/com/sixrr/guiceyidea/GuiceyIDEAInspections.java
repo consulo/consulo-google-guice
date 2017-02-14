@@ -35,7 +35,6 @@ public class GuiceyIDEAInspections implements InspectionToolProvider {
                 RedundantToProviderBindingInspection.class,
                 RedundantScopeBindingInspection.class,
                 MultipleInjectedConstructorsForClassInspection.class,
-                InjectOfNonPublicMemberInspection.class,
                 MultipleBindingAnnotationsInspection.class,
                 InvalidRequestParametersInspection.class,
                 BindingAnnotationWithoutInjectInspection.class,

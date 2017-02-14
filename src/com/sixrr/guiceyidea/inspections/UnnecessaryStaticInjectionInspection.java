@@ -16,75 +16,91 @@
 
 package com.sixrr.guiceyidea.inspections;
 
-import com.intellij.codeInsight.AnnotationUtil;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.psi.*;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 
-public class UnnecessaryStaticInjectionInspection extends BaseInspection{
+public class UnnecessaryStaticInjectionInspection extends BaseInspection
+{
+	@Override
+	@NotNull
+	protected String buildErrorString(Object... infos)
+	{
+		return GuiceyIDEABundle.message("unnecessary.static.injection.problem.descriptor");
+	}
 
-    @NotNull
-    protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("unnecessary.static.injection.problem.descriptor");
-    }
+	@Override
+	public BaseInspectionVisitor buildVisitor()
+	{
+		return new Visitor();
+	}
 
-    public BaseInspectionVisitor buildVisitor(){
-        return new Visitor();
-    }
+	@Override
+	@Nullable
+	public LocalQuickFix buildFix(PsiElement location, Object[] infos)
+	{
+		return new DeleteBindingFix();
+	}
 
-    @Nullable
-    public LocalQuickFix buildFix(PsiElement location, Object[] infos){
-        return new DeleteBindingFix();
-    }
+	private static class Visitor extends BaseInspectionVisitor
+	{
+		@Override
+		public void visitMethodCallExpression(PsiMethodCallExpression expression)
+		{
+			super.visitMethodCallExpression(expression);
+			final PsiReferenceExpression methodExpression = expression.getMethodExpression();
+			final String methodName = methodExpression.getReferenceName();
+			if(!"requestStaticInjection".equals(methodName))
+			{
+				return;
+			}
+			final PsiExpression[] args = expression.getArgumentList().getExpressions();
+			for(PsiExpression arg : args)
+			{
+				if(!(arg instanceof PsiClassObjectAccessExpression))
+				{
+					continue;
+				}
+				final PsiTypeElement classTypeElement = ((PsiClassObjectAccessExpression) arg).getOperand();
+				final PsiType classType = classTypeElement.getType();
+				if(!(classType instanceof PsiClassType))
+				{
+					continue;
+				}
+				final PsiClass classToBindStatically = ((PsiClassType) classType).resolve();
+				if(classToBindStatically == null)
+				{
+					continue;
+				}
+				if(!classHasStaticInjects(classToBindStatically))
+				{
+					registerError(classTypeElement);
+				}
+			}
+		}
 
-    private static class Visitor extends BaseInspectionVisitor{
-        public void visitMethodCallExpression(PsiMethodCallExpression expression){
-            super.visitMethodCallExpression(expression);
-            final PsiReferenceExpression methodExpression = expression.getMethodExpression();
-            final String methodName = methodExpression.getReferenceName();
-            if(!"requestStaticInjection".equals(methodName)){
-                return;
-            }
-            final PsiExpression[] args = expression.getArgumentList().getExpressions();
-            for(PsiExpression arg : args){
-                if(!(arg instanceof PsiClassObjectAccessExpression)){
-                    continue;
-                }
-                final PsiTypeElement classTypeElement = ((PsiClassObjectAccessExpression) arg).getOperand();
-                final PsiType classType = classTypeElement.getType();
-                if(!(classType instanceof PsiClassType)){
-                    continue;
-                }
-                final PsiClass classToBindStatically = ((PsiClassType) classType).resolve();
-                if(classToBindStatically == null){
-                    continue;
-                }
-                if(!classHasStaticInjects(classToBindStatically)){
-                    registerError(classTypeElement);
-                }
-            }
-        }
-
-        private static boolean classHasStaticInjects(PsiClass aClass){
-            final PsiMethod[] methods = aClass.getMethods();
-            for(PsiMethod method : methods){
-                if(method.hasModifierProperty(PsiModifier.STATIC) &&
-                        AnnotationUtil.isAnnotated(method, "com.google.inject.Inject", true))
-                {
-                    return true;
-                }
-            }
-            final PsiField[] fields = aClass.getFields();
-            for(PsiField field : fields){
-                if(field.hasModifierProperty(PsiModifier.STATIC) &&
-                        AnnotationUtil.isAnnotated(field, "com.google.inject.Inject", true))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-    }
+		private static boolean classHasStaticInjects(PsiClass aClass)
+		{
+			final PsiMethod[] methods = aClass.getMethods();
+			for(PsiMethod method : methods)
+			{
+				if(method.hasModifierProperty(PsiModifier.STATIC) && GoogleGuiceAnnotationUtil.isAnnotatedByInject(method, true))
+				{
+					return true;
+				}
+			}
+			final PsiField[] fields = aClass.getFields();
+			for(PsiField field : fields)
+			{
+				if(field.hasModifierProperty(PsiModifier.STATIC) && GoogleGuiceAnnotationUtil.isAnnotatedByInject(field, true))
+				{
+					return true;
+				}
+			}
+			return false;
+		}
+	}
 }

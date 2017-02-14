@@ -16,11 +16,19 @@
 
 package com.sixrr.guiceyidea.inspections;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.AnnotationUtil;
-import com.intellij.psi.*;
+import com.intellij.psi.PsiAnnotation;
+import com.intellij.psi.PsiClass;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiField;
+import com.intellij.psi.PsiJavaCodeReferenceElement;
+import com.intellij.psi.PsiMethod;
+import com.intellij.psi.PsiParameter;
+import com.intellij.psi.PsiVariable;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import org.jetbrains.annotations.NotNull;
+import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 
 public class BindingAnnotationWithoutInjectInspection extends BaseInspection{
 
@@ -44,7 +52,7 @@ public class BindingAnnotationWithoutInjectInspection extends BaseInspection{
                 return;
             }
             if(boundVariable instanceof PsiField){
-                if(!AnnotationUtil.isAnnotated(boundVariable, "com.google.inject.Inject", true)){
+                if(!GoogleGuiceAnnotationUtil.isAnnotatedByInject(boundVariable, true)){
                     registerError(annotation);
                 }
             } else if(boundVariable instanceof PsiParameter){
@@ -52,7 +60,7 @@ public class BindingAnnotationWithoutInjectInspection extends BaseInspection{
                 if(containingMethod == null){
                     return;
                 }
-                if(!AnnotationUtil.isAnnotated(containingMethod, "com.google.inject.Inject", true)){
+                if(!GoogleGuiceAnnotationUtil.isAnnotatedByInject(containingMethod, true)){
                     registerError(annotation);
                 }
             }

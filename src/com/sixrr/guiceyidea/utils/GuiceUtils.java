@@ -16,9 +16,9 @@
 
 package com.sixrr.guiceyidea.utils;
 
-import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
+import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 
 public class GuiceUtils {
   private GuiceUtils() {
@@ -36,7 +36,7 @@ public class GuiceUtils {
       return true;
     }
     for (PsiMethod constructor : constructors) {
-      if (AnnotationUtil.isAnnotated(constructor, "com.google.inject.Inject", true)) {
+      if (GoogleGuiceAnnotationUtil.isAnnotatedByInject(constructor, true)) {
         return true;
       }
 

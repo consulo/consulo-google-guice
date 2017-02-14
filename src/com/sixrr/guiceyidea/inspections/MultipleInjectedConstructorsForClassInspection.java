@@ -16,11 +16,11 @@
 
 package com.sixrr.guiceyidea.inspections;
 
-import com.intellij.codeInsight.AnnotationUtil;
+import org.jetbrains.annotations.NotNull;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import org.jetbrains.annotations.NotNull;
+import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 
 public class MultipleInjectedConstructorsForClassInspection extends BaseInspection{
 
@@ -44,13 +44,13 @@ public class MultipleInjectedConstructorsForClassInspection extends BaseInspecti
             if(constructors.length <= 1){
                 return;
             }
-            if(!AnnotationUtil.isAnnotated(method, "com.google.inject.Inject", true)){
+            if(!GoogleGuiceAnnotationUtil.isAnnotatedByInject(method, true)){
                 return;
             }
 
             int annotatedConstructorCount = 0;
             for(PsiMethod constructor : constructors){
-                if(AnnotationUtil.isAnnotated(constructor, "com.google.inject.Inject", true)){
+                if(GoogleGuiceAnnotationUtil.isAnnotatedByInject(constructor, true)){
                     annotatedConstructorCount++;
                 }
             }
