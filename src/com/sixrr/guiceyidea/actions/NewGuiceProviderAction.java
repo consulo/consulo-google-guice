@@ -16,82 +16,72 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import java.io.IOException;
+import java.util.Properties;
 
 import org.jetbrains.annotations.NotNull;
-import com.intellij.ide.highlighter.JavaFileType;
-import com.intellij.openapi.diagnostic.Logger;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.codeStyle.CodeStyleManager;
-import com.intellij.psi.codeStyle.JavaCodeStyleManager;
-import com.intellij.util.IncorrectOperationException;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
 
-public class NewGuiceProviderAction extends GeneratePluginClassAction{
+public class NewGuiceProviderAction extends GeneratePluginClassAction
+{
+	private String myProvidedClassName;
 
-    private static final Logger LOGGER = Logger.getInstance("NewGuiceProviderAction");
-    private String providedClassName = null;
+	public NewGuiceProviderAction()
+	{
+		super(GuiceyIDEABundle.message("new.guice.provider.action.name"), GuiceyIDEABundle.message("new.guice.provider.action.name"), null);
+	}
 
-    public NewGuiceProviderAction(){
-        super(GuiceyIDEABundle.message("new.guice.provider.action.name"),
-                GuiceyIDEABundle.message("new.guice.provider.action.name"),
-                null);
-    }
+	@Override
+	@NotNull
+	protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory)
+	{
+		final ProviderDialog dialog = new ProviderDialog(project);
+		dialog.show();
+		if(dialog.isOK())
+		{
+			final String providerName = dialog.getProviderName();
+			myProvidedClassName = dialog.getProvidedClass();
+			final MyInputValidator validator = new MyInputValidator(project, directory);
+			validator.canClose(providerName);
+			return validator.getCreatedElements();
+		}
+		return PsiElement.EMPTY_ARRAY;
+	}
 
-    protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory){
-        final ProviderDialog dialog = new ProviderDialog(project);
-        dialog.show();
-        if(dialog.isOK()){
-            final String providerName = dialog.getProviderName();
-            providedClassName = dialog.getProvidedClass();
-            final MyInputValidator validator = new MyInputValidator(project, directory);
-            validator.canClose(providerName);
-            return validator.getCreatedElements();
-        }
-        return PsiElement.EMPTY_ARRAY;
-    }
+	@Nullable
+	@Override
+	protected Properties getProperties()
+	{
+		Properties properties = new Properties();
+		properties.put("PROVIDER_CLASS_NAME", myProvidedClassName);
+		return properties;
+	}
 
-    @NotNull
-    protected PsiElement[] create(String newName, PsiDirectory directory){
-        final Project project = directory.getProject();
-        final PsiFileFactory elementFactory = PsiFileFactory.getInstance(project);
-        final GuiceProviderBuilder builder = new GuiceProviderBuilder();
-        builder.setClassName(newName);
-        builder.setProvidedClassName(providedClassName);
+	@NotNull
+	@Override
+	protected String getTemplateName()
+	{
+		return "Google Guice Provider";
+	}
 
-        final String beanClassString;
-        try{
-            beanClassString = builder.buildProviderClass();
-        } catch(IOException e){
-            LOGGER.error(e);
-            return PsiElement.EMPTY_ARRAY;
-        }
-        try{
-            final PsiFile newFile = elementFactory.createFileFromText(newName + ".java", JavaFileType.INSTANCE, beanClassString);
-            final JavaCodeStyleManager codeStyleManager = JavaCodeStyleManager.getInstance(project);
-            final PsiElement shortenedFile = codeStyleManager.shortenClassReferences(newFile);
-            final PsiElement reformattedFile = CodeStyleManager.getInstance(project).reformat(shortenedFile);
-            directory.add(reformattedFile);
-            return new PsiElement[]{reformattedFile};
-        } catch(IncorrectOperationException e){
-            LOGGER.error(e);
-            return PsiElement.EMPTY_ARRAY;
-        }
-    }
+	@Override
+	protected String getErrorTitle()
+	{
+		return GuiceyIDEABundle.message("new.guice.provider.error");
+	}
 
-    protected String getErrorTitle(){
-        return GuiceyIDEABundle.message("new.guice.provider.error");
-    }
+	@Override
+	protected String getCommandName()
+	{
+		return GuiceyIDEABundle.message("new.guice.provider.command");
+	}
 
-    protected String getCommandName(){
-        return GuiceyIDEABundle.message("new.guice.provider.command");
-    }
-
-    protected String getActionName(PsiDirectory directory, String newName){
-        return GuiceyIDEABundle.message("new.guice.provider.name", directory, newName);
-    }
+	@Override
+	protected String getActionName(PsiDirectory directory, String newName)
+	{
+		return GuiceyIDEABundle.message("new.guice.provider.name", directory, newName);
+	}
 }

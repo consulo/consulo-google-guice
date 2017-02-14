@@ -16,92 +16,121 @@
 
 package com.sixrr.guiceyidea.inspections;
 
-import com.intellij.codeInspection.LocalInspectionTool;
-import com.intellij.codeInspection.LocalQuickFix;
-import com.intellij.codeInspection.ProblemsHolder;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.NotNull;
+import com.intellij.codeInspection.LocalInspectionTool;
+import com.intellij.codeInspection.LocalQuickFix;
+import com.intellij.codeInspection.ProblemsHolder;
+import com.intellij.openapi.module.ModuleUtilCore;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
+import com.sixrr.guiceyidea.GuiceyIDEABundle;
+import consulo.annotations.RequiredReadAction;
+import consulo.google.guice.module.extension.GoogleGuiceModuleExtension;
 
-public abstract class BaseInspection extends LocalInspectionTool{
+public abstract class BaseInspection extends LocalInspectionTool
+{
+	private String m_shortName = null;
+	@NonNls
+	private static final String INSPECTION = "Inspection";
 
-    private String m_shortName = null;
-    @NonNls
-    private static final String INSPECTION = "Inspection";
+	@Override
+	@Nls
+	@NotNull
+	public String getGroupDisplayName()
+	{
+		return "Guice Inspections";
+	}
 
-    @Nls
-    @NotNull
-    public String getGroupDisplayName(){
-        return "Guice Inspections";
-    }
+	@Override
+	@NotNull
+	public String getShortName()
+	{
+		if(m_shortName != null)
+		{
+			return m_shortName;
+		}
+		final Class<? extends BaseInspection> aClass = getClass();
+		final String name = aClass.getName();
+		m_shortName = name.substring(name.lastIndexOf('.') + 1, name.length() - INSPECTION.length());
+		return m_shortName;
+	}
 
-    @NotNull
-    public String getShortName(){
-        if(m_shortName != null){
-            return m_shortName;
-        }
-        final Class<? extends BaseInspection> aClass = getClass();
-        final String name = aClass.getName();
-        m_shortName = name.substring(name.lastIndexOf('.') + 1,
-                name.length() - INSPECTION.length());
-        return m_shortName;
-    }
+	@NotNull
+	protected abstract String buildErrorString(Object... infos);
 
-    @NotNull
-    protected abstract String buildErrorString(Object... infos);
+	protected boolean buildQuickFixesOnlyForOnTheFlyErrors()
+	{
+		return false;
+	}
 
-    protected boolean buildQuickFixesOnlyForOnTheFlyErrors(){
-        return false;
-    }
+	private String getPropertyPrefixForInspection()
+	{
+		final String shortName = getShortName();
+		return getPrefix(shortName);
+	}
 
-    private String getPropertyPrefixForInspection(){
-        final String shortName = getShortName();
-        return getPrefix(shortName);
-    }
+	public static String getPrefix(String shortName)
+	{
+		final int length = shortName.length();
+		final StringBuffer buffer = new StringBuffer(length + 10);
+		buffer.append(Character.toLowerCase(shortName.charAt(0)));
+		for(int i = 1; i < length; i++)
+		{
+			final char c = shortName.charAt(i);
+			if(Character.isUpperCase(c))
+			{
+				buffer.append('.');
+				buffer.append(Character.toLowerCase(c));
+			}
+			else
+			{
+				buffer.append(c);
+			}
+		}
+		return buffer.toString();
+	}
 
-    public static String getPrefix(String shortName){
-        final int length = shortName.length();
-        final StringBuffer buffer = new StringBuffer(length + 10);
-        buffer.append(Character.toLowerCase(shortName.charAt(0)));
-        for(int i = 1; i < length; i++){
-            final char c = shortName.charAt(i);
-            if(Character.isUpperCase(c)){
-                buffer.append('.');
-                buffer.append(Character.toLowerCase(c));
-            } else{
-                buffer.append(c);
-            }
-        }
-        return buffer.toString();
-    }
+	@NotNull
+	@Override
+	public String getDisplayName()
+	{
+		@NonNls final String displayNameSuffix = ".display.name";
+		return GuiceyIDEABundle.message(getPropertyPrefixForInspection() + displayNameSuffix);
+	}
 
-    public String getDisplayName(){
-        @NonNls final String displayNameSuffix = ".display.name";
-        return GuiceyIDEABundle.message(
-                getPropertyPrefixForInspection() + displayNameSuffix);
-    }
+	@Override
+	public boolean isEnabledByDefault()
+	{
+		return true;
+	}
 
-    public boolean isEnabledByDefault(){
-        return true;
-    }
+	public abstract BaseInspectionVisitor buildVisitor();
 
-    public abstract BaseInspectionVisitor buildVisitor();
+	@Override
+	@NotNull
+	@RequiredReadAction
+	public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly)
+	{
+		GoogleGuiceModuleExtension extension = ModuleUtilCore.getExtension(holder.getFile(), GoogleGuiceModuleExtension.class);
+		if(extension == null)
+		{
+			return new PsiElementVisitor()
+			{
+			};
+		}
 
-    @NotNull
-    public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder,
-                                          boolean isOnTheFly){
-        final BaseInspectionVisitor visitor = buildVisitor();
+		final BaseInspectionVisitor visitor = buildVisitor();
 
-        visitor.setProblemsHolder(holder);
-        visitor.setOnTheFly(isOnTheFly);
-        visitor.setInspection(this);
-        return visitor;
-    }
+		visitor.setProblemsHolder(holder);
+		visitor.setOnTheFly(isOnTheFly);
+		visitor.setInspection(this);
+		return visitor;
+	}
 
-    public LocalQuickFix buildFix(PsiElement location, Object[] infos){
-        return null;
-    }
+	public LocalQuickFix buildFix(PsiElement location, Object[] infos)
+	{
+		return null;
+	}
 }

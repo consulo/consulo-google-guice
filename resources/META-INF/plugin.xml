@@ -38,6 +38,12 @@
 
 		<implicitUsageProvider implementation="consulo.google.guice.GoogleGuiceImplicitUsageProvider"/>
 
+		<internalFileTemplate name="Google Guice Module"/>
+		<internalFileTemplate name="Google Guice Method Interceptor"/>
+		<internalFileTemplate name="Google Guice Provider"/>
+		<internalFileTemplate name="Google Guice Binding Annotation"/>
+		<internalFileTemplate name="Google Guice Scope Annotation"/>
+
 		<intentionAction>
 			<bundleName>com.sixrr.guiceyidea.GuiceyIDEABundle</bundleName>
 			<categoryKey>guice.intentions</categoryKey>

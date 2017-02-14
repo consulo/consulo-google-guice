@@ -1,0 +1,14 @@
+#if (${PACKAGE_NAME} && ${PACKAGE_NAME} != "")package ${PACKAGE_NAME};#end
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import java.lang.annotation.ElementType;
+import com.google.inject.ScopeAnnotation;
+
+#parse("Java File Header.java")
+@Retention(RetentionPolicy.RUNTIME)
+@Target(ElementType.TYPE)
+@ScopeAnnotation
+public @interface ${NAME} {
+}

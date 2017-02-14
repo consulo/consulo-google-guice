@@ -16,80 +16,56 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import java.io.IOException;
-
 import org.jetbrains.annotations.NotNull;
-import com.intellij.ide.highlighter.JavaFileType;
-import com.intellij.openapi.diagnostic.Logger;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiFile;
-import com.intellij.psi.PsiFileFactory;
-import com.intellij.psi.PsiManager;
-import com.intellij.psi.codeStyle.CodeStyleManager;
-import com.intellij.psi.codeStyle.JavaCodeStyleManager;
-import com.intellij.util.IncorrectOperationException;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
 
-public class NewGuiceMethodInterceptorAction extends GeneratePluginClassAction{
+public class NewGuiceMethodInterceptorAction extends GeneratePluginClassAction
+{
+	public NewGuiceMethodInterceptorAction()
+	{
+		super(GuiceyIDEABundle.message("new.guice.method.interceptor.action.name"), GuiceyIDEABundle.message("new.guice.method.interceptor.action.name"), null);
+	}
 
-    private static final Logger LOGGER = Logger.getInstance("NewGuiceMethodInterceptorAction");
+	@Override
+	@NotNull
+	protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory)
+	{
+		final String InterceptorName = Messages.showInputDialog("Name for new Method Interceptor", "Create Guice Method Interceptor", Messages.getQuestionIcon());
+		if(InterceptorName != null)
+		{
+			final MyInputValidator validator = new MyInputValidator(project, directory);
+			validator.canClose(InterceptorName);
+			return validator.getCreatedElements();
+		}
+		return PsiElement.EMPTY_ARRAY;
+	}
 
-    public NewGuiceMethodInterceptorAction(){
-        super(GuiceyIDEABundle.message("new.guice.method.interceptor.action.name"),
-                GuiceyIDEABundle.message("new.guice.method.interceptor.action.name"),
-                null);
-    }
+	@NotNull
+	@Override
+	protected String getTemplateName()
+	{
+		return "Google Guice Method Interceptor";
+	}
 
-    protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory){
-        final String InterceptorName =
-                Messages.showInputDialog("Name for new Method Interceptor", "Create Guice Method Interceptor", Messages.getQuestionIcon());
-        if(InterceptorName != null){
-            final MyInputValidator validator = new MyInputValidator(project, directory);
-            validator.canClose(InterceptorName);
-            return validator.getCreatedElements();
-        }
-        return PsiElement.EMPTY_ARRAY;
-    }
+	@Override
+	protected String getErrorTitle()
+	{
+		return GuiceyIDEABundle.message("new.guice.method.interceptor.error");
+	}
 
-    @NotNull
-    protected PsiElement[] create(String newName, PsiDirectory directory){
-        final Project project = directory.getProject();
-        final PsiManager manager = PsiManager.getInstance(project);
-        final PsiFileFactory elementFactory = PsiFileFactory.getInstance(project);
-        final GuiceMethodInterceptorBuilder builder = new GuiceMethodInterceptorBuilder();
-        builder.setClassName(newName);
-        final String beanClassString;
-        try{
-            beanClassString = builder.buildInterceptorClass();
-        } catch(IOException e){
-            LOGGER.error(e);
-            return PsiElement.EMPTY_ARRAY;
-        }
-        try{
-            final PsiFile newFile = elementFactory.createFileFromText(newName + ".java", JavaFileType.INSTANCE, beanClassString);
-            final CodeStyleManager codeStyleManager = CodeStyleManager.getInstance(project);
-            final PsiElement shortenedFile = JavaCodeStyleManager.getInstance(project).shortenClassReferences(newFile);
-            final PsiElement reformattedFile = codeStyleManager.reformat(shortenedFile);
-            directory.add(reformattedFile);
-            return new PsiElement[]{reformattedFile};
-        } catch(IncorrectOperationException e){
-            LOGGER.error(e);
-            return PsiElement.EMPTY_ARRAY;
-        }
-    }
+	@Override
+	protected String getCommandName()
+	{
+		return GuiceyIDEABundle.message("new.guice.method.interceptor.command");
+	}
 
-    protected String getErrorTitle(){
-        return GuiceyIDEABundle.message("new.guice.method.interceptor.error");
-    }
-
-    protected String getCommandName(){
-        return GuiceyIDEABundle.message("new.guice.method.interceptor.command");
-    }
-
-    protected String getActionName(PsiDirectory directory, String newName){
-        return GuiceyIDEABundle.message("new.guice.method.interceptor.name", directory, newName);
-    }
+	@Override
+	protected String getActionName(PsiDirectory directory, String newName)
+	{
+		return GuiceyIDEABundle.message("new.guice.method.interceptor.name", directory, newName);
+	}
 }

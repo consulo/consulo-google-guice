@@ -16,11 +16,17 @@
 
 package com.sixrr.guiceyidea.actions;
 
+import java.util.Properties;
+
 import javax.swing.Icon;
 
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.IdeView;
 import com.intellij.ide.actions.CreateElementActionBase;
+import com.intellij.ide.fileTemplates.FileTemplate;
+import com.intellij.ide.fileTemplates.FileTemplateManager;
+import com.intellij.ide.fileTemplates.FileTemplateUtil;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.LangDataKeys;
 import com.intellij.openapi.actionSystem.Presentation;
@@ -30,59 +36,91 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
-import com.intellij.util.IncorrectOperationException;
+import consulo.annotations.RequiredDispatchThread;
 
-public abstract class GeneratePluginClassAction extends CreateElementActionBase{
+public abstract class GeneratePluginClassAction extends CreateElementActionBase
+{
+	protected GeneratePluginClassAction(String text, String description, Icon icon)
+	{
+		super(text, description, icon);
+	}
 
-    // length == 1 is important to make MyInputValidator close the dialog when
-    // module selection is canceled. That's some weird interface actually...
-    private static final PsiElement[] CANCELED = new PsiElement[1];
+	@Override
+	@NotNull
+	protected PsiElement[] invokeDialog(Project project, PsiDirectory directory)
+	{
+		return invokeDialogImpl(project, directory);
+	}
 
-    protected GeneratePluginClassAction(String text, String description, Icon icon){
-        super(text, description, icon);
-    }
+	@NotNull
+	protected abstract PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory);
 
-    @NotNull
-    protected PsiElement[] invokeDialog(Project project, PsiDirectory directory){
-        final PsiElement[] psiElements = invokeDialogImpl(project, directory);
-        if(psiElements == CANCELED){
-            return PsiElement.EMPTY_ARRAY;
-        }
+	@NotNull
+	protected abstract String getTemplateName();
 
-        //   new EditorCaretMover(project).openInEditor(psiElements[0]);
-        return psiElements;
-    }
+	@Override
+	@NotNull
+	protected final PsiElement[] create(String newName, PsiDirectory directory)
+	{
+		FileTemplate template = FileTemplateManager.getInstance().getInternalTemplate(getTemplateName());
+		try
+		{
+			Properties properties = getProperties();
+			if(properties != null)
+			{
+				properties.putAll(FileTemplateManager.getInstance().getDefaultProperties(directory.getProject()));
+			}
 
-    protected abstract PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory);
+			PsiElement element = FileTemplateUtil.createFromTemplate(template, newName, properties, directory);
+			if(element != null)
+			{
+				return new PsiElement[]{element};
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return PsiElement.EMPTY_ARRAY;
+	}
 
-    protected void checkBeforeCreate(String newName, PsiDirectory directory) throws IncorrectOperationException{
-        JavaDirectoryService.getInstance().checkCreateClass(directory, newName);
-    }
+	@Nullable
+	protected Properties getProperties()
+	{
+		return null;
+	}
 
-    public void update(AnActionEvent e){
-        super.update(e);
-        final Presentation presentation = e.getPresentation();
-        if(!presentation.isEnabled()){
-            return;
-        }
-        final IdeView view = e.getData(LangDataKeys.IDE_VIEW);
-        final Project project = e.getData(LangDataKeys.PROJECT);
-        if(view == null || project == null){
-            presentation.setEnabled(false);
-            presentation.setVisible(false);
-            return;
-        }
-        final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-        final PsiDirectory[] dirs = view.getDirectories();
-        for(PsiDirectory dir : dirs){
-            if(projectFileIndex.isInSourceContent(dir.getVirtualFile()) && JavaDirectoryService.getInstance().getPackage(dir) != null){
-                presentation.setEnabled(true);
-                presentation.setVisible(true);
-                return;
-            }
-        }
+	@RequiredDispatchThread
+	@Override
+	public void update(@NotNull AnActionEvent e)
+	{
+		super.update(e);
+		final Presentation presentation = e.getPresentation();
+		if(!presentation.isEnabled())
+		{
+			return;
+		}
+		final IdeView view = e.getData(LangDataKeys.IDE_VIEW);
+		final Project project = e.getData(LangDataKeys.PROJECT);
+		if(view == null || project == null)
+		{
+			presentation.setEnabled(false);
+			presentation.setVisible(false);
+			return;
+		}
+		final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
+		final PsiDirectory[] dirs = view.getDirectories();
+		for(PsiDirectory dir : dirs)
+		{
+			if(projectFileIndex.isInSourceContent(dir.getVirtualFile()) && JavaDirectoryService.getInstance().getPackage(dir) != null)
+			{
+				presentation.setEnabled(true);
+				presentation.setVisible(true);
+				return;
+			}
+		}
 
-        presentation.setEnabled(false);
-        presentation.setVisible(false);
-    }
+		presentation.setEnabled(false);
+		presentation.setVisible(false);
+	}
 }

@@ -16,6 +16,7 @@
 
 package com.sixrr.guiceyidea.actions;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeView;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -30,6 +31,7 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
+import consulo.annotations.RequiredDispatchThread;
 import consulo.google.guice.module.extension.GoogleGuiceModuleExtension;
 
 public class GuiceActionGroup extends DefaultActionGroup
@@ -42,8 +44,9 @@ public class GuiceActionGroup extends DefaultActionGroup
 		presentation.setIcon(AllIcons.Providers.Google);
 	}
 
+	@RequiredDispatchThread
 	@Override
-	public void update(AnActionEvent e)
+	public void update(@NotNull AnActionEvent e)
 	{
 		final Module module = e.getData(LangDataKeys.MODULE);
 		final IdeView view = e.getData(LangDataKeys.IDE_VIEW);
