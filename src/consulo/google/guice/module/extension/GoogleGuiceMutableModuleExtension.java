@@ -1,8 +1,17 @@
 package consulo.google.guice.module.extension;
 
+import org.jdom.Element;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import consulo.annotations.RequiredReadAction;
 import consulo.module.extension.MutableModuleExtension;
 import consulo.roots.ModuleRootLayer;
+import consulo.ui.CheckBox;
+import consulo.ui.Component;
+import consulo.ui.Components;
+import consulo.ui.Layouts;
+import consulo.ui.RequiredUIAccess;
+import consulo.ui.VerticalLayout;
 
 /**
  * @author VISTALL
@@ -15,6 +24,41 @@ public class GoogleGuiceMutableModuleExtension extends GoogleGuiceModuleExtensio
 		super(id, moduleRootLayer);
 	}
 
+	public void setUseJSR330(boolean useJSR330)
+	{
+		myUseJSR330 = useJSR330;
+	}
+
+	@RequiredUIAccess
+	@Nullable
+	@Override
+	public Component createConfigurationComponent(@NotNull Runnable updateOnCheck)
+	{
+		VerticalLayout vertical = Layouts.vertical();
+		CheckBox useJSRBox = Components.checkBox("Use 'javax.inject' annotations?", myUseJSR330);
+		useJSRBox.addValueListener(valueEvent -> setUseJSR330(valueEvent.getValue()));
+		vertical.add(useJSRBox);
+		return vertical;
+	}
+
+	@RequiredReadAction
+	@Override
+	protected void loadStateImpl(@NotNull Element element)
+	{
+		super.loadStateImpl(element);
+		myUseJSR330 = Boolean.parseBoolean(element.getAttributeValue("useJSR330", "false"));
+	}
+
+	@Override
+	protected void getStateImpl(@NotNull Element element)
+	{
+		super.getStateImpl(element);
+		if(myUseJSR330)
+		{
+			element.setAttribute("useJSR330", "true");
+		}
+	}
+
 	@Override
 	public void setEnabled(boolean b)
 	{
@@ -24,6 +68,6 @@ public class GoogleGuiceMutableModuleExtension extends GoogleGuiceModuleExtensio
 	@Override
 	public boolean isModified(@NotNull GoogleGuiceModuleExtension extension)
 	{
-		return myIsEnabled != extension.isEnabled();
+		return myIsEnabled != extension.isEnabled() || myUseJSR330 != extension.isUseJSR330();
 	}
 }

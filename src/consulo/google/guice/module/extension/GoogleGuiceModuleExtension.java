@@ -1,7 +1,8 @@
 package consulo.google.guice.module.extension;
 
 import org.jetbrains.annotations.NotNull;
-import consulo.extension.impl.ModuleExtensionImpl;
+import consulo.annotations.RequiredReadAction;
+import consulo.module.extension.impl.ModuleExtensionImpl;
 import consulo.roots.ModuleRootLayer;
 
 /**
@@ -10,8 +11,23 @@ import consulo.roots.ModuleRootLayer;
  */
 public class GoogleGuiceModuleExtension extends ModuleExtensionImpl<GoogleGuiceModuleExtension>
 {
+	protected boolean myUseJSR330;
+
 	public GoogleGuiceModuleExtension(@NotNull String id, @NotNull ModuleRootLayer moduleRootLayer)
 	{
 		super(id, moduleRootLayer);
+	}
+
+	@RequiredReadAction
+	@Override
+	public void commit(@NotNull GoogleGuiceModuleExtension mutableModuleExtension)
+	{
+		super.commit(mutableModuleExtension);
+		myUseJSR330 = mutableModuleExtension.isUseJSR330();
+	}
+
+	public boolean isUseJSR330()
+	{
+		return myUseJSR330;
 	}
 }

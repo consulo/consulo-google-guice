@@ -32,6 +32,7 @@
           </orderEntry>
           <orderEntry type="library" name="consulo-plugin: consulo.java" level="project" />
           <orderEntry type="library" name="consulo-plugin: com.intellij.properties" level="project" />
+          <orderEntry type="library" name="consulo-plugin: org.jetbrains.idea.maven" level="project" />
         </module-layer>
       </module>
     </modules>

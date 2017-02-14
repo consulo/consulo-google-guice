@@ -5,7 +5,9 @@
 	<version>SNAPSHOT</version>
 	<depends>com.intellij.properties</depends>
 	<depends>consulo.java</depends>
+	<depends optional="true">org.jetbrains.idea.maven</depends>
 	<vendor url="http://www.sixthandredriver.com" email="info@sixthandredriver.com">Sixth and Red River Software</vendor>
+
 	<actions>
 		<group id="GuiceActionGroup" class="com.sixrr.guiceyidea.actions.GuiceActionGroup" text="Google Guice">
 			<action id="NewGuiceModule" class="com.sixrr.guiceyidea.actions.NewGuiceModuleAction" text="Guice Module" description="New Guice Module"/>
@@ -20,6 +22,10 @@
 			<add-to-group group-id="NewGroup" anchor="last"/>
 		</group>
 	</actions>
+
+	<extensions defaultExtensionNs="org.jetbrains.idea.maven">
+		<importer implementation="consulo.google.guice.maven.importer.GoogleGuiceMavenImporter"/>
+	</extensions>
 
 	<extensions defaultExtensionNs="com.intellij">
 		<moduleExtensionProvider key="google-guice"

@@ -1,0 +1,20 @@
+<component name="libraryTable">
+  <library name="consulo-plugin: org.jetbrains.idea.maven" type="consulo-plugin">
+    <binaries>
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/maven.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/wadl-core.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/commons-cli-1.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/maven-server-api.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/lucene-core-2.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/maven2-server-impl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/plexus-utils-2.0.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/maven30-server-impl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/maven32-server-impl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/artifact-resolver-m2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/artifact-resolver-m3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/maven3-server-common.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/artifact-resolver-m31.jar!/" />
+      <root url="jar://$PROJECT_DIR$/dep/org.jetbrains.idea.maven/lib/plexus-archiver-2.4.4.jar!/" />
+    </binaries>
+  </library>
+</component>
