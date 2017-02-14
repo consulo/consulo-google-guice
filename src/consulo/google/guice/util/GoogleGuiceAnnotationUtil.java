@@ -37,6 +37,9 @@ public class GoogleGuiceAnnotationUtil
 	public static final String GUICE_INJECT = "com.google.inject.Inject";
 	public static final String JSR330_INJECT = "javax.inject.Inject";
 
+	public static final String GUICE_SINGLETON = "com.google.inject.Singleton";
+	public static final String JSR330_SINGLETON = "javax.inject.Singleton";
+
 	@RequiredReadAction
 	public static boolean isAnnotatedByInject(@NotNull PsiModifierListOwner element, boolean checkHierarchy)
 	{
@@ -54,11 +57,36 @@ public class GoogleGuiceAnnotationUtil
 		}
 
 		List<String> anno = new ArrayList<>(2);
-		anno.add(GUICE_INJECT);
 		if(extension.isUseJSR330())
 		{
 			anno.add(JSR330_INJECT);
 		}
+		anno.add(GUICE_INJECT);
+		return anno;
+	}
+
+	@RequiredReadAction
+	public static boolean isAnnotatedBySingleton(@NotNull PsiModifierListOwner element, boolean checkHierarchy)
+	{
+		Collection<String> injectAnnotations = getInjectAnnotations(element);
+		return !injectAnnotations.isEmpty() && AnnotationUtil.isAnnotated(element, injectAnnotations, checkHierarchy);
+	}
+
+	@RequiredReadAction
+	public static Collection<String> getSingletonAnnotations(@NotNull PsiModifierListOwner element)
+	{
+		GoogleGuiceModuleExtension extension = ModuleUtilCore.getExtension(element, GoogleGuiceModuleExtension.class);
+		if(extension == null)
+		{
+			return Collections.emptyList();
+		}
+
+		List<String> anno = new ArrayList<>(2);
+		if(extension.isUseJSR330())
+		{
+			anno.add(JSR330_SINGLETON);
+		}
+		anno.add(GUICE_SINGLETON);
 		return anno;
 	}
 }

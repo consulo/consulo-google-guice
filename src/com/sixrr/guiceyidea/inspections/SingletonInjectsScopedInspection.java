@@ -16,12 +16,13 @@
 
 package com.sixrr.guiceyidea.inspections;
 
+import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.AnnotationUtils;
-import org.jetbrains.annotations.NotNull;
+import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 
 public class SingletonInjectsScopedInspection extends BaseInspection{
 
@@ -45,7 +46,7 @@ public class SingletonInjectsScopedInspection extends BaseInspection{
             if(containingClass == null){
                 return;
             }
-            if(!AnnotationUtil.isAnnotated(containingClass, "com.google.inject.Singleton", true)){
+            if(!GoogleGuiceAnnotationUtil.isAnnotatedBySingleton(containingClass, true)){
                 return;
             }
             final PsiElement owner = annotation.getParent().getParent();

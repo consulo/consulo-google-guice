@@ -22,6 +22,7 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiExpression;
 import com.intellij.psi.PsiMethodCallExpression;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
+import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 
 public class MoveBindingScopeToClassPredicate implements PsiElementPredicate{
     public boolean satisfiedBy(PsiElement element){
@@ -42,7 +43,7 @@ public class MoveBindingScopeToClassPredicate implements PsiElementPredicate{
         if(implementingClass == null){
             return false;
         }
-        if(AnnotationUtil.isAnnotated(implementingClass, "com.google.inject.Singleton", true) ||
+        if(GoogleGuiceAnnotationUtil.isAnnotatedBySingleton(implementingClass, true) ||
                 AnnotationUtil.isAnnotated(implementingClass, "com.google.inject.servlet.RequestScoped", false) ||
                 AnnotationUtil.isAnnotated(implementingClass, "com.google.inject.servlet.SessionScoped", false)){
             return false;
