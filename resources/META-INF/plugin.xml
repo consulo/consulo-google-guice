@@ -36,6 +36,8 @@
 								 mutableClass="consulo.google.guice.module.extension.GoogleGuiceMutableModuleExtension"/>
 		<inspectionToolProvider implementation="com.sixrr.guiceyidea.GuiceyIDEAInspections"/>
 
+		<implicitUsageProvider implementation="consulo.google.guice.GoogleGuiceImplicitUsageProvider"/>
+
 		<intentionAction>
 			<bundleName>com.sixrr.guiceyidea.GuiceyIDEABundle</bundleName>
 			<categoryKey>guice.intentions</categoryKey>
