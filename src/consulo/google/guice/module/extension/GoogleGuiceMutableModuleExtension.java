@@ -8,8 +8,6 @@ import consulo.module.extension.MutableModuleExtension;
 import consulo.roots.ModuleRootLayer;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;
-import consulo.ui.Components;
-import consulo.ui.Layouts;
 import consulo.ui.RequiredUIAccess;
 import consulo.ui.VerticalLayout;
 
@@ -34,8 +32,8 @@ public class GoogleGuiceMutableModuleExtension extends GoogleGuiceModuleExtensio
 	@Override
 	public Component createConfigurationComponent(@NotNull Runnable updateOnCheck)
 	{
-		VerticalLayout vertical = Layouts.vertical();
-		CheckBox useJSRBox = Components.checkBox("Use 'javax.inject' annotations?", myUseJSR330);
+		VerticalLayout vertical = VerticalLayout.create();
+		CheckBox useJSRBox = CheckBox.create("Use 'javax.inject' annotations?", myUseJSR330);
 		useJSRBox.addValueListener(valueEvent -> setUseJSR330(valueEvent.getValue()));
 		vertical.add(useJSRBox);
 		return vertical;
