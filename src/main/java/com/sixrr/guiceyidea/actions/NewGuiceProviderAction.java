@@ -16,7 +16,8 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import java.util.Properties;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -53,9 +54,9 @@ public class NewGuiceProviderAction extends GeneratePluginClassAction
 
 	@Nullable
 	@Override
-	protected Properties getProperties()
+	protected Map<String, Object> getProperties()
 	{
-		Properties properties = new Properties();
+		Map<String, Object> properties = new HashMap<>();
 		properties.put("PROVIDER_CLASS_NAME", myProvidedClassName);
 		return properties;
 	}

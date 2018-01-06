@@ -16,7 +16,7 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import java.util.Properties;
+import java.util.Map;
 
 import javax.swing.Icon;
 
@@ -62,30 +62,22 @@ public abstract class GeneratePluginClassAction extends CreateElementActionBase
 	@NotNull
 	protected final PsiElement[] create(String newName, PsiDirectory directory)
 	{
-		FileTemplate template = FileTemplateManager.getInstance().getInternalTemplate(getTemplateName());
+		FileTemplate template = FileTemplateManager.getInstance(directory.getProject()).getInternalTemplate(getTemplateName());
 		try
 		{
-			Properties properties = getProperties();
-			if(properties != null)
-			{
-				properties.putAll(FileTemplateManager.getInstance().getDefaultProperties(directory.getProject()));
-			}
+			Map<String, Object> properties = getProperties();
 
 			PsiElement element = FileTemplateUtil.createFromTemplate(template, newName, properties, directory);
-			if(element != null)
-			{
-				return new PsiElement[]{element};
-			}
+			return new PsiElement[]{element};
 		}
 		catch(Exception e)
 		{
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
-		return PsiElement.EMPTY_ARRAY;
 	}
 
 	@Nullable
-	protected Properties getProperties()
+	protected Map<String, Object> getProperties()
 	{
 		return null;
 	}
