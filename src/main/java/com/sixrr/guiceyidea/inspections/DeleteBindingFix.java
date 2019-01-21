@@ -16,6 +16,8 @@
 
 package com.sixrr.guiceyidea.inspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.openapi.diagnostic.Logger;
@@ -26,23 +28,22 @@ import com.intellij.psi.util.PsiTreeUtil;
 import com.intellij.util.IncorrectOperationException;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.MutationUtils;
-import org.jetbrains.annotations.NotNull;
 
 class DeleteBindingFix implements LocalQuickFix{
     private static final Logger LOGGER = Logger.getInstance("RedundantToProviderBindingInspection");
 
-    @NotNull
+    @Nonnull
     public String getName(){
         return GuiceyIDEABundle.message("delete.binding");
     }
 
-    @NotNull
+    @Nonnull
     public String getFamilyName(){
         return "";
     }
 
     @SuppressWarnings({"HardCodedStringLiteral"})
-    public void applyFix(@NotNull Project project, ProblemDescriptor descriptor){
+    public void applyFix(@Nonnull Project project, ProblemDescriptor descriptor){
         final PsiMethodCallExpression call =
                 PsiTreeUtil.getParentOfType(descriptor.getPsiElement(), PsiMethodCallExpression.class);
         assert call != null;

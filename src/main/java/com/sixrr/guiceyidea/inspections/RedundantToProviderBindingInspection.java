@@ -16,18 +16,20 @@
 
 package com.sixrr.guiceyidea.inspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.psi.*;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.AnnotationUtils;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+
+import javax.annotation.Nullable;
 
 public class RedundantToProviderBindingInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("redundant.to.provider.binding.problem.descriptor");
     }

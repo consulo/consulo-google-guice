@@ -16,7 +16,8 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiDirectory;
@@ -31,7 +32,7 @@ public class NewGuiceBindingAnnotationAction extends GeneratePluginClassAction
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory)
 	{
 		final String annotationName = Messages.showInputDialog("Name for new binding annotation", "Create Guice Binding Annotation", Messages.getQuestionIcon());
@@ -44,7 +45,7 @@ public class NewGuiceBindingAnnotationAction extends GeneratePluginClassAction
 		return PsiElement.EMPTY_ARRAY;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	protected String getTemplateName()
 	{

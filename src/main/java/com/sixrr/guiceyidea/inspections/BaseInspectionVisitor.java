@@ -21,8 +21,8 @@ import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemDescriptor;
 import com.intellij.codeInspection.ProblemsHolder;
 import com.intellij.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 import java.util.List;
 
@@ -104,7 +104,7 @@ public abstract class BaseInspectionVisitor extends JavaElementVisitor{
         }
     }
 
-    protected void registerError(@NotNull PsiElement location, Object... infos){
+    protected void registerError(@Nonnull PsiElement location, Object... infos){
         final LocalQuickFix[] fixes = createFixes(location, infos);
         final String description = inspection.buildErrorString(infos);
         holder.registerProblem(location, description, fixes);

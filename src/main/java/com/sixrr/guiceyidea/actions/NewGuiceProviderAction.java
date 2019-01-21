@@ -19,8 +19,9 @@ package com.sixrr.guiceyidea.actions;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
@@ -36,7 +37,7 @@ public class NewGuiceProviderAction extends GeneratePluginClassAction
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory)
 	{
 		final ProviderDialog dialog = new ProviderDialog(project);
@@ -61,7 +62,7 @@ public class NewGuiceProviderAction extends GeneratePluginClassAction
 		return properties;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	protected String getTemplateName()
 	{

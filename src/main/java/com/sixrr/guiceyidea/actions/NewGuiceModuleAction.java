@@ -16,7 +16,8 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.psi.PsiDirectory;
@@ -30,7 +31,7 @@ public class NewGuiceModuleAction extends GeneratePluginClassAction
 		super(GuiceyIDEABundle.message("new.guice.module.action.name"), GuiceyIDEABundle.message("new.guice.module.action.name"), null);
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory)
 	{
@@ -44,7 +45,7 @@ public class NewGuiceModuleAction extends GeneratePluginClassAction
 		return PsiElement.EMPTY_ARRAY;
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	protected String getTemplateName()
 	{

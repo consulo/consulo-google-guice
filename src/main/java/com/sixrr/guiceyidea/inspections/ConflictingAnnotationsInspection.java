@@ -16,16 +16,17 @@
 
 package com.sixrr.guiceyidea.inspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiModifierListOwner;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import org.jetbrains.annotations.NotNull;
 
 public class ConflictingAnnotationsInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("conflicting.annotations.problem.descriptor");
     }

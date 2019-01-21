@@ -16,8 +16,9 @@
 
 package com.sixrr.guiceyidea.intentions;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInsight.intention.IntentionAction;
 import com.intellij.openapi.editor.CaretModel;
 import com.intellij.openapi.editor.Editor;
@@ -37,7 +38,7 @@ public abstract class Intention implements IntentionAction
 	}
 
 	@Override
-	public void invoke(@NotNull Project project, Editor editor, PsiFile file) throws IncorrectOperationException
+	public void invoke(@Nonnull Project project, Editor editor, PsiFile file) throws IncorrectOperationException
 	{
 		if(!file.isWritable())
 		{
@@ -52,9 +53,9 @@ public abstract class Intention implements IntentionAction
 		processIntention(element);
 	}
 
-	protected abstract void processIntention(@NotNull PsiElement element) throws IncorrectOperationException;
+	protected abstract void processIntention(@Nonnull PsiElement element) throws IncorrectOperationException;
 
-	@NotNull
+	@Nonnull
 	protected abstract PsiElementPredicate getElementPredicate();
 
 	@Nullable
@@ -78,7 +79,7 @@ public abstract class Intention implements IntentionAction
 	}
 
 	@Override
-	public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file)
+	public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file)
 	{
 		return findMatchingElement(file, editor) != null;
 	}

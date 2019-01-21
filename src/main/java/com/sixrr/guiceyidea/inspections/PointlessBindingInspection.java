@@ -23,13 +23,13 @@ import com.intellij.openapi.project.Project;
 import com.intellij.psi.*;
 import com.intellij.util.IncorrectOperationException;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class PointlessBindingInspection extends BaseInspection{
     private static final Logger LOGGER = Logger.getInstance("PointlessBindingInspection");
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("pointless.binding.problem.descriptor");
     }
@@ -44,18 +44,18 @@ public class PointlessBindingInspection extends BaseInspection{
     }
 
     private static class DeleteBindingFix implements LocalQuickFix{
-        @NotNull
+        @Nonnull
         public String getName(){
             return GuiceyIDEABundle.message("delete.binding");
         }
 
-        @NotNull
+        @Nonnull
         public String getFamilyName(){
             return "";
         }
 
         @SuppressWarnings({"HardCodedStringLiteral"})
-        public void applyFix(@NotNull Project project, ProblemDescriptor descriptor){
+        public void applyFix(@Nonnull Project project, ProblemDescriptor descriptor){
             final PsiMethodCallExpression element = (PsiMethodCallExpression) descriptor.getPsiElement();
             try{
                 element.getParent().delete();

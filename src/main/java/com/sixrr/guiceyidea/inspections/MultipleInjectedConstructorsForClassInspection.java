@@ -16,7 +16,7 @@
 
 package com.sixrr.guiceyidea.inspections;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.psi.PsiClass;
 import com.intellij.psi.PsiMethod;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
@@ -24,7 +24,7 @@ import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 
 public class MultipleInjectedConstructorsForClassInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("multiple.injected.constructors.for.class.problem.descriptor");
     }

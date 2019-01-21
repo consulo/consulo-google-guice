@@ -21,8 +21,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.lang.properties.IProperty;
 import com.intellij.lang.properties.PropertiesUtil;
 import com.intellij.openapi.util.TextRange;
@@ -55,7 +56,7 @@ class NamedReference implements PsiPolyVariantReference{
         return null;
     }
 
-    @NotNull
+    @Nonnull
     public ResolveResult[] multiResolve(boolean incompleteCode){
         final String text = element.getText();
         final String strippedText = text.substring(1, text.length() - 1);
@@ -81,7 +82,7 @@ class NamedReference implements PsiPolyVariantReference{
         return MutationUtils.replaceExpression('\"' + newElementName + '\"', element);
     }
 
-    public PsiElement bindToElement(@NotNull PsiElement element) throws IncorrectOperationException{
+    public PsiElement bindToElement(@Nonnull PsiElement element) throws IncorrectOperationException{
         return null;
     }
 

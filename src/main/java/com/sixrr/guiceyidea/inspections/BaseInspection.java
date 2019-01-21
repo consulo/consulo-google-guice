@@ -16,9 +16,10 @@
 
 package com.sixrr.guiceyidea.inspections;
 
+import javax.annotation.Nonnull;
+
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.NotNull;
 import com.intellij.codeInspection.LocalInspectionTool;
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.codeInspection.ProblemsHolder;
@@ -37,14 +38,14 @@ public abstract class BaseInspection extends LocalInspectionTool
 
 	@Override
 	@Nls
-	@NotNull
+	@Nonnull
 	public String getGroupDisplayName()
 	{
 		return "Guice Inspections";
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	public String getShortName()
 	{
 		if(m_shortName != null)
@@ -57,7 +58,7 @@ public abstract class BaseInspection extends LocalInspectionTool
 		return m_shortName;
 	}
 
-	@NotNull
+	@Nonnull
 	protected abstract String buildErrorString(Object... infos);
 
 	protected boolean buildQuickFixesOnlyForOnTheFlyErrors()
@@ -92,7 +93,7 @@ public abstract class BaseInspection extends LocalInspectionTool
 		return buffer.toString();
 	}
 
-	@NotNull
+	@Nonnull
 	@Override
 	public String getDisplayName()
 	{
@@ -109,9 +110,9 @@ public abstract class BaseInspection extends LocalInspectionTool
 	public abstract BaseInspectionVisitor buildVisitor();
 
 	@Override
-	@NotNull
+	@Nonnull
 	@RequiredReadAction
-	public PsiElementVisitor buildVisitor(@NotNull ProblemsHolder holder, boolean isOnTheFly)
+	public PsiElementVisitor buildVisitor(@Nonnull ProblemsHolder holder, boolean isOnTheFly)
 	{
 		GoogleGuiceModuleExtension extension = ModuleUtilCore.getExtension(holder.getFile(), GoogleGuiceModuleExtension.class);
 		if(extension == null)

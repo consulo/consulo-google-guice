@@ -20,19 +20,19 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public abstract class MutablyNamedIntention extends Intention{
     private String text = null;
 
     protected abstract String getTextForElement(PsiElement element);
 
-    @NotNull
+    @Nonnull
     public String getText(){
         return text;
     }
 
-    public boolean isAvailable(@NotNull Project project, Editor editor, PsiFile file){
+    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file){
         final PsiElement element = findMatchingElement(file, editor);
         if(element != null){
             text = getTextForElement(element);

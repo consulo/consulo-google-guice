@@ -20,7 +20,7 @@ import com.intellij.psi.*;
 import com.intellij.util.IncorrectOperationException;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.MutationUtils;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class ToggleInjectionRequiredIntention extends MutablyNamedIntention{
     protected String getTextForElement(PsiElement element){
@@ -39,17 +39,17 @@ public class ToggleInjectionRequiredIntention extends MutablyNamedIntention{
         return GuiceyIDEABundle.message("toggle.required");
     }
 
-    @NotNull
+    @Nonnull
     public String getFamilyName(){
         return GuiceyIDEABundle.message("toggle.injection.required.family.name");
     }
 
-    @NotNull
+    @Nonnull
     protected PsiElementPredicate getElementPredicate(){
         return new ToggleInjectionRequiredPredicate();
     }
 
-    protected void processIntention(@NotNull PsiElement element) throws IncorrectOperationException{
+    protected void processIntention(@Nonnull PsiElement element) throws IncorrectOperationException{
         final PsiAnnotation annotation = (PsiAnnotation) element;
         final PsiAnnotationMemberValue value = annotation.findAttributeValue("optional");
         if(value == null){

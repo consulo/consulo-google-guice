@@ -16,16 +16,17 @@
 
 package com.sixrr.guiceyidea.inspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.AnnotationUtils;
-import org.jetbrains.annotations.NotNull;
 
 public class SessionScopedInjectsRequestScopedInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("session.scoped.injects.request.scoped.problem.descriptor");
     }

@@ -21,7 +21,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.openapi.module.ModuleUtilCore;
 import com.intellij.psi.PsiModifierListOwner;
@@ -41,14 +41,14 @@ public class GoogleGuiceAnnotationUtil
 	public static final String JSR330_SINGLETON = "javax.inject.Singleton";
 
 	@RequiredReadAction
-	public static boolean isAnnotatedByInject(@NotNull PsiModifierListOwner element, boolean checkHierarchy)
+	public static boolean isAnnotatedByInject(@Nonnull PsiModifierListOwner element, boolean checkHierarchy)
 	{
 		Collection<String> injectAnnotations = getInjectAnnotations(element);
 		return !injectAnnotations.isEmpty() && AnnotationUtil.isAnnotated(element, injectAnnotations, checkHierarchy);
 	}
 
 	@RequiredReadAction
-	public static Collection<String> getInjectAnnotations(@NotNull PsiModifierListOwner element)
+	public static Collection<String> getInjectAnnotations(@Nonnull PsiModifierListOwner element)
 	{
 		GoogleGuiceModuleExtension extension = ModuleUtilCore.getExtension(element, GoogleGuiceModuleExtension.class);
 		if(extension == null)
@@ -66,14 +66,14 @@ public class GoogleGuiceAnnotationUtil
 	}
 
 	@RequiredReadAction
-	public static boolean isAnnotatedBySingleton(@NotNull PsiModifierListOwner element, boolean checkHierarchy)
+	public static boolean isAnnotatedBySingleton(@Nonnull PsiModifierListOwner element, boolean checkHierarchy)
 	{
 		Collection<String> injectAnnotations = getInjectAnnotations(element);
 		return !injectAnnotations.isEmpty() && AnnotationUtil.isAnnotated(element, injectAnnotations, checkHierarchy);
 	}
 
 	@RequiredReadAction
-	public static Collection<String> getSingletonAnnotations(@NotNull PsiModifierListOwner element)
+	public static Collection<String> getSingletonAnnotations(@Nonnull PsiModifierListOwner element)
 	{
 		GoogleGuiceModuleExtension extension = ModuleUtilCore.getExtension(element, GoogleGuiceModuleExtension.class);
 		if(extension == null)

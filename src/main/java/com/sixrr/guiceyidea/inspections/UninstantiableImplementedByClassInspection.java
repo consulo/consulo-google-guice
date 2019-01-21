@@ -20,11 +20,11 @@ import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
 import com.sixrr.guiceyidea.utils.AnnotationUtils;
 import com.intellij.psi.*;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class UninstantiableImplementedByClassInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("uninstantiable.implemented.by.class.problem.descriptor");
     }

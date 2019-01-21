@@ -16,16 +16,17 @@
 
 package com.sixrr.guiceyidea.inspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.AnnotationUtils;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
-import org.jetbrains.annotations.NotNull;
 
 public class InvalidProvidedByInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("invalid.provided.by.problem.descriptor");
     }

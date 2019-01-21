@@ -16,7 +16,8 @@
 
 package com.sixrr.guiceyidea.intentions;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.*;
 import com.intellij.util.IncorrectOperationException;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
@@ -24,22 +25,22 @@ import com.sixrr.guiceyidea.utils.GuiceUtils;
 import com.sixrr.guiceyidea.utils.MutationUtils;
 
 public class MoveBindingToClassIntention extends Intention{
-    @NotNull
+    @Nonnull
     public String getText(){
         return GuiceyIDEABundle.message("move.binding.to.class.text");
     }
 
-    @NotNull
+    @Nonnull
     public String getFamilyName(){
         return GuiceyIDEABundle.message("move.binding.to.class.family.name");
     }
 
-    @NotNull
+    @Nonnull
     protected PsiElementPredicate getElementPredicate(){
         return new MoveBindingToClassPredicate();
     }
 
-    protected void processIntention(@NotNull PsiElement element) throws IncorrectOperationException{
+    protected void processIntention(@Nonnull PsiElement element) throws IncorrectOperationException{
         final PsiMethodCallExpression originalCall = (PsiMethodCallExpression) element;
         final PsiClass implmentingClass = GuiceUtils.findImplementingClassForBinding(originalCall);
         final PsiClass implementedClass = GuiceUtils.findImplementedClassForBinding(originalCall);

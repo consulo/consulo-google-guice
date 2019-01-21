@@ -18,10 +18,10 @@ package com.sixrr.guiceyidea.actions;
 
 import java.util.Map;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import javax.swing.Icon;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import com.intellij.ide.IdeView;
 import com.intellij.ide.actions.CreateElementActionBase;
 import com.intellij.ide.fileTemplates.FileTemplate;
@@ -46,20 +46,20 @@ public abstract class GeneratePluginClassAction extends CreateElementActionBase
 	}
 
 	@Override
-	@NotNull
+	@Nonnull
 	protected PsiElement[] invokeDialog(Project project, PsiDirectory directory)
 	{
 		return invokeDialogImpl(project, directory);
 	}
 
-	@NotNull
+	@Nonnull
 	protected abstract PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory);
 
-	@NotNull
+	@Nonnull
 	protected abstract String getTemplateName();
 
 	@Override
-	@NotNull
+	@Nonnull
 	protected final PsiElement[] create(String newName, PsiDirectory directory)
 	{
 		FileTemplate template = FileTemplateManager.getInstance(directory.getProject()).getInternalTemplate(getTemplateName());
@@ -84,7 +84,7 @@ public abstract class GeneratePluginClassAction extends CreateElementActionBase
 
 	@RequiredDispatchThread
 	@Override
-	public void update(@NotNull AnActionEvent e)
+	public void update(@Nonnull AnActionEvent e)
 	{
 		super.update(e);
 		final Presentation presentation = e.getPresentation();

@@ -1,8 +1,9 @@
 package consulo.google.guice.module.extension;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import org.jdom.Element;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import consulo.annotations.RequiredReadAction;
 import consulo.module.extension.MutableModuleExtension;
 import consulo.roots.ModuleRootLayer;
@@ -17,7 +18,7 @@ import consulo.ui.VerticalLayout;
  */
 public class GoogleGuiceMutableModuleExtension extends GoogleGuiceModuleExtension implements MutableModuleExtension<GoogleGuiceModuleExtension>
 {
-	public GoogleGuiceMutableModuleExtension(@NotNull String id, @NotNull ModuleRootLayer moduleRootLayer)
+	public GoogleGuiceMutableModuleExtension(@Nonnull String id, @Nonnull ModuleRootLayer moduleRootLayer)
 	{
 		super(id, moduleRootLayer);
 	}
@@ -30,7 +31,7 @@ public class GoogleGuiceMutableModuleExtension extends GoogleGuiceModuleExtensio
 	@RequiredUIAccess
 	@Nullable
 	@Override
-	public Component createConfigurationComponent(@NotNull Runnable updateOnCheck)
+	public Component createConfigurationComponent(@Nonnull Runnable updateOnCheck)
 	{
 		VerticalLayout vertical = VerticalLayout.create();
 		CheckBox useJSRBox = CheckBox.create("Use 'javax.inject' annotations?", myUseJSR330);
@@ -41,14 +42,14 @@ public class GoogleGuiceMutableModuleExtension extends GoogleGuiceModuleExtensio
 
 	@RequiredReadAction
 	@Override
-	protected void loadStateImpl(@NotNull Element element)
+	protected void loadStateImpl(@Nonnull Element element)
 	{
 		super.loadStateImpl(element);
 		myUseJSR330 = Boolean.parseBoolean(element.getAttributeValue("useJSR330", "false"));
 	}
 
 	@Override
-	protected void getStateImpl(@NotNull Element element)
+	protected void getStateImpl(@Nonnull Element element)
 	{
 		super.getStateImpl(element);
 		if(myUseJSR330)
@@ -64,7 +65,7 @@ public class GoogleGuiceMutableModuleExtension extends GoogleGuiceModuleExtensio
 	}
 
 	@Override
-	public boolean isModified(@NotNull GoogleGuiceModuleExtension extension)
+	public boolean isModified(@Nonnull GoogleGuiceModuleExtension extension)
 	{
 		return myIsEnabled != extension.isEnabled() || myUseJSR330 != extension.isUseJSR330();
 	}

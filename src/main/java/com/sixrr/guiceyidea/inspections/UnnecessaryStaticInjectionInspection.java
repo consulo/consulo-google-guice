@@ -16,8 +16,9 @@
 
 package com.sixrr.guiceyidea.inspections;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
 import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.psi.*;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
@@ -26,7 +27,7 @@ import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 public class UnnecessaryStaticInjectionInspection extends BaseInspection
 {
 	@Override
-	@NotNull
+	@Nonnull
 	protected String buildErrorString(Object... infos)
 	{
 		return GuiceyIDEABundle.message("unnecessary.static.injection.problem.descriptor");

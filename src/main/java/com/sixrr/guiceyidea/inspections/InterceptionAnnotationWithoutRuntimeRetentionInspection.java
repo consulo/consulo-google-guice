@@ -19,13 +19,13 @@ package com.sixrr.guiceyidea.inspections;
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.psi.*;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 import java.util.Collections;
 
 public class InterceptionAnnotationWithoutRuntimeRetentionInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("interception.annotation.without.runtime.retention.problem.descriptor");
     }

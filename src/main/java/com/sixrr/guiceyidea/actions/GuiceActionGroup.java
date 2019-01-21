@@ -16,7 +16,8 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeView;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -46,7 +47,7 @@ public class GuiceActionGroup extends DefaultActionGroup
 
 	@RequiredDispatchThread
 	@Override
-	public void update(@NotNull AnActionEvent e)
+	public void update(@Nonnull AnActionEvent e)
 	{
 		final Module module = e.getData(LangDataKeys.MODULE);
 		final IdeView view = e.getData(LangDataKeys.IDE_VIEW);

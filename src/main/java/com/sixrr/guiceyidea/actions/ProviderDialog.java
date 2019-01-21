@@ -31,7 +31,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
 import org.jetbrains.annotations.NonNls;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nullable;
 import com.intellij.ide.util.TreeClassChooser;
 import com.intellij.ide.util.TreeJavaClassChooserDialog;
 import com.intellij.openapi.project.Project;

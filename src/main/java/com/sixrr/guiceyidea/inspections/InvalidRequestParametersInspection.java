@@ -16,16 +16,17 @@
 
 package com.sixrr.guiceyidea.inspections;
 
+import javax.annotation.Nonnull;
+
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiType;
 import com.intellij.psi.PsiVariable;
 import com.intellij.psi.util.PsiTreeUtil;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import org.jetbrains.annotations.NotNull;
 
 public class InvalidRequestParametersInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("invalid.request.parameters.problem.descriptor");
     }

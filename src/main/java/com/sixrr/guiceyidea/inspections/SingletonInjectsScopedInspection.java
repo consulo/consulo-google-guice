@@ -16,7 +16,8 @@
 
 package com.sixrr.guiceyidea.inspections;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.psi.*;
 import com.intellij.psi.util.PsiTreeUtil;
@@ -26,7 +27,7 @@ import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 
 public class SingletonInjectsScopedInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("singleton.injects.scoped.problem.descriptor");
     }

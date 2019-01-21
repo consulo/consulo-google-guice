@@ -21,12 +21,12 @@ import com.intellij.codeInspection.LocalQuickFix;
 import com.intellij.psi.*;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class RedundantScopeBindingInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("redundant.scope.binding.problem.descriptor");
     }

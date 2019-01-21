@@ -21,11 +21,11 @@ import com.intellij.psi.PsiLiteralExpression;
 import com.intellij.psi.PsiReference;
 import com.intellij.psi.PsiReferenceProvider;
 import com.intellij.util.ProcessingContext;
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
 
 public class NamedReferenceProvider extends PsiReferenceProvider {
-    @NotNull
-    public PsiReference[] getReferencesByElement(@NotNull PsiElement psiElement, @NotNull ProcessingContext context) {
+    @Nonnull
+    public PsiReference[] getReferencesByElement(@Nonnull PsiElement psiElement, @Nonnull ProcessingContext context) {
         return new PsiReference[]{new NamedReference((PsiLiteralExpression) psiElement)};
     }
 }

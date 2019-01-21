@@ -16,7 +16,8 @@
 
 package com.sixrr.guiceyidea.inspections;
 
-import org.jetbrains.annotations.NotNull;
+import javax.annotation.Nonnull;
+
 import com.intellij.codeInsight.AnnotationUtil;
 import com.intellij.psi.PsiAnnotation;
 import com.intellij.psi.PsiClass;
@@ -32,7 +33,7 @@ import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 
 public class BindingAnnotationWithoutInjectInspection extends BaseInspection{
 
-    @NotNull
+    @Nonnull
     protected String buildErrorString(Object... infos){
         return GuiceyIDEABundle.message("binding.annotation.without.inject.problem.descriptor");
     }
