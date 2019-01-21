@@ -20,7 +20,6 @@ import java.util.Map;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import javax.swing.Icon;
 
 import com.intellij.ide.IdeView;
 import com.intellij.ide.actions.CreateElementActionBase;
@@ -37,10 +36,11 @@ import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
 import consulo.annotations.RequiredDispatchThread;
+import consulo.ui.image.Image;
 
 public abstract class GeneratePluginClassAction extends CreateElementActionBase
 {
-	protected GeneratePluginClassAction(String text, String description, Icon icon)
+	protected GeneratePluginClassAction(String text, String description, Image icon)
 	{
 		super(text, description, icon);
 	}
