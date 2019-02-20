@@ -32,8 +32,8 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import consulo.annotations.RequiredDispatchThread;
 import consulo.google.guice.module.extension.GoogleGuiceModuleExtension;
+import consulo.ui.RequiredUIAccess;
 
 public class GuiceActionGroup extends DefaultActionGroup
 {
@@ -45,7 +45,7 @@ public class GuiceActionGroup extends DefaultActionGroup
 		presentation.setIcon(AllIcons.Providers.Google);
 	}
 
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	@Override
 	public void update(@Nonnull AnActionEvent e)
 	{

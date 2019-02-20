@@ -35,7 +35,7 @@ import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.intellij.psi.PsiElement;
-import consulo.annotations.RequiredDispatchThread;
+import consulo.ui.RequiredUIAccess;
 import consulo.ui.image.Image;
 
 public abstract class GeneratePluginClassAction extends CreateElementActionBase
@@ -82,7 +82,7 @@ public abstract class GeneratePluginClassAction extends CreateElementActionBase
 		return null;
 	}
 
-	@RequiredDispatchThread
+	@RequiredUIAccess
 	@Override
 	public void update(@Nonnull AnActionEvent e)
 	{
