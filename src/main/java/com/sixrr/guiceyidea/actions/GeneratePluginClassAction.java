@@ -16,11 +16,6 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import java.util.Map;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import com.intellij.ide.IdeView;
 import com.intellij.ide.actions.CreateElementActionBase;
 import com.intellij.ide.fileTemplates.FileTemplate;
@@ -38,6 +33,11 @@ import com.intellij.psi.PsiElement;
 import consulo.ui.RequiredUIAccess;
 import consulo.ui.image.Image;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
+import java.util.function.Consumer;
+
 public abstract class GeneratePluginClassAction extends CreateElementActionBase
 {
 	protected GeneratePluginClassAction(String text, String description, Image icon)
@@ -46,10 +46,9 @@ public abstract class GeneratePluginClassAction extends CreateElementActionBase
 	}
 
 	@Override
-	@Nonnull
-	protected PsiElement[] invokeDialog(Project project, PsiDirectory directory)
+	protected void invokeDialog(Project project, PsiDirectory directory, Consumer<PsiElement[]> elementsConsumer)
 	{
-		return invokeDialogImpl(project, directory);
+		elementsConsumer.accept(invokeDialogImpl(project, directory));
 	}
 
 	@Nonnull
