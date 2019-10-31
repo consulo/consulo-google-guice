@@ -1,4 +1,4 @@
-<idea-plugin>
+<consulo-plugin>
 	<id>consulo.google.guice</id>
 	<name>Google Guice</name>
 	<description>Support for Guice, Google's inversion-of-control container</description>
@@ -72,4 +72,4 @@
 		<psi.referenceContributor implementation="com.sixrr.guiceyidea.GuiceyIDEAReferenceContributor"/>
 		-->
 	</extensions>
-</idea-plugin>
+</consulo-plugin>
