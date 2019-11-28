@@ -1,10 +1,10 @@
 package consulo.google.guice.module.extension;
 
-import javax.annotation.Nonnull;
-
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.module.extension.impl.ModuleExtensionImpl;
 import consulo.roots.ModuleRootLayer;
+
+import javax.annotation.Nonnull;
 
 /**
  * @author VISTALL

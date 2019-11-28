@@ -16,17 +16,17 @@
 
 package consulo.google.guice.util;
 
+import com.intellij.codeInsight.AnnotationUtil;
+import com.intellij.openapi.module.ModuleUtilCore;
+import com.intellij.psi.PsiModifierListOwner;
+import consulo.annotation.access.RequiredReadAction;
+import consulo.google.guice.module.extension.GoogleGuiceModuleExtension;
+
+import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-
-import javax.annotation.Nonnull;
-import com.intellij.codeInsight.AnnotationUtil;
-import com.intellij.openapi.module.ModuleUtilCore;
-import com.intellij.psi.PsiModifierListOwner;
-import consulo.annotations.RequiredReadAction;
-import consulo.google.guice.module.extension.GoogleGuiceModuleExtension;
 
 /**
  * @author VISTALL

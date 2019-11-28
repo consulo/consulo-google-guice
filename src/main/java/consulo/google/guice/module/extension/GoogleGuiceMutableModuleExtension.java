@@ -1,16 +1,16 @@
 package consulo.google.guice.module.extension;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
-import org.jdom.Element;
-import consulo.annotations.RequiredReadAction;
+import consulo.annotation.access.RequiredReadAction;
 import consulo.module.extension.MutableModuleExtension;
 import consulo.roots.ModuleRootLayer;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;
-import consulo.ui.RequiredUIAccess;
+import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
+import org.jdom.Element;
+
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 /**
  * @author VISTALL

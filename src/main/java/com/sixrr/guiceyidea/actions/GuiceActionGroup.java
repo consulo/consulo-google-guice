@@ -16,8 +16,6 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import javax.annotation.Nonnull;
-
 import com.intellij.icons.AllIcons;
 import com.intellij.ide.IdeView;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -33,7 +31,9 @@ import com.intellij.psi.JavaDirectoryService;
 import com.intellij.psi.PsiDirectory;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import consulo.google.guice.module.extension.GoogleGuiceModuleExtension;
-import consulo.ui.RequiredUIAccess;
+import consulo.ui.annotation.RequiredUIAccess;
+
+import javax.annotation.Nonnull;
 
 public class GuiceActionGroup extends DefaultActionGroup
 {
