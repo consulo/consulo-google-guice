@@ -1,16 +1,17 @@
 package consulo.google.guice.module.extension;
 
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+import org.jdom.Element;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.disposer.Disposable;
 import consulo.module.extension.MutableModuleExtension;
 import consulo.roots.ModuleRootLayer;
 import consulo.ui.CheckBox;
 import consulo.ui.Component;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.layout.VerticalLayout;
-import org.jdom.Element;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 /**
  * @author VISTALL
@@ -31,10 +32,10 @@ public class GoogleGuiceMutableModuleExtension extends GoogleGuiceModuleExtensio
 	@RequiredUIAccess
 	@Nullable
 	@Override
-	public Component createConfigurationComponent(@Nonnull Runnable updateOnCheck)
+	public Component createConfigurationComponent(@Nonnull Disposable disposable, @Nonnull Runnable runnable)
 	{
 		VerticalLayout vertical = VerticalLayout.create();
-		CheckBox useJSRBox = CheckBox.create("Use 'javax.inject' annotations?", myUseJSR330);
+		CheckBox useJSRBox = CheckBox.create("Prefer 'javax.inject' annotations?", myUseJSR330);
 		useJSRBox.addValueListener(valueEvent -> setUseJSR330(valueEvent.getValue()));
 		vertical.add(useJSRBox);
 		return vertical;
