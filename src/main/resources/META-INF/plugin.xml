@@ -30,7 +30,7 @@
 	<extensions defaultExtensionNs="com.intellij">
 		<moduleExtensionProvider key="google-guice"
 								 parentKey="java"
-								 icon="/providers/google.png"
+								 icon="consulo.platform.base.PlatformIconGroup@providers.google"
 								 name="Google Guice"
 								 immutableClass="consulo.google.guice.module.extension.GoogleGuiceModuleExtension"
 								 mutableClass="consulo.google.guice.module.extension.GoogleGuiceMutableModuleExtension"/>
