@@ -7,6 +7,9 @@
 	<depends>consulo.java</depends>
 	<depends optional="true">org.jetbrains.idea.maven</depends>
 	<vendor url="http://www.sixthandredriver.com" email="info@sixthandredriver.com">Sixth and Red River Software</vendor>
+	<tags>
+		<tag>language.extension</tag>
+	</tags>
 
 	<actions>
 		<group id="GuiceActionGroup" class="com.sixrr.guiceyidea.actions.GuiceActionGroup" text="Google Guice">
