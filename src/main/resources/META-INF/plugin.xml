@@ -1,4 +1,4 @@
-<consulo-plugin>
+<consulo-plugin url="https://github.com/consulo/consulo-google-guice">
 	<id>consulo.google.guice</id>
 	<name>Google Guice</name>
 	<description>Support for Guice, Google's inversion-of-control container</description>
