@@ -19,15 +19,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>consulo</groupId>
-		<artifactId>arch.managment</artifactId>
-		<version>2-SNAPSHOT</version>
+		<artifactId>arch.ide-api-provided</artifactId>
+		<version>3-SNAPSHOT</version>
 		<relativePath/>
 	</parent>
 
 	<groupId>consulo.plugin</groupId>
-	<artifactId>consulo.google.guice.parent</artifactId>
+	<artifactId>consulo.google.guice.api</artifactId>
 	<version>3-SNAPSHOT</version>
-	<packaging>pom</packaging>
+	<packaging>jar</packaging>
 
 	<repositories>
 		<repository>
@@ -35,14 +35,12 @@
 			<url>https://maven.consulo.io/repository/snapshots/</url>
 			<snapshots>
 				<enabled>true</enabled>
-				<updatePolicy>interval:60</updatePolicy>
+				<updatePolicy>always</updatePolicy>
 			</snapshots>
 		</repository>
 	</repositories>
 
-	<modules>
-		<module>api</module>
-		<module>maven-impl</module>
-		<module>plugin</module>
-	</modules>
+	<dependencies>
+
+	</dependencies>
 </project>

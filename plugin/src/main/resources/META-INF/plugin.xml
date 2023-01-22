@@ -1,0 +1,28 @@
+<consulo-plugin url="https://github.com/consulo/consulo-google-guice">
+	<id>consulo.google.guice</id>
+	<name>Google Guice</name>
+	<description>Support for Guice, Google's inversion-of-control container</description>
+	<version>SNAPSHOT</version>
+	<depends>com.intellij.properties</depends>
+	<depends>consulo.java</depends>
+	<depends optional="true">org.jetbrains.idea.maven</depends>
+	<vendor url="http://www.sixthandredriver.com" email="info@sixthandredriver.com">Sixth and Red River Software</vendor>
+	<tags>
+		<tag>language.extension</tag>
+	</tags>
+
+	<actions>
+		<group id="GuiceActionGroup" class="com.sixrr.guiceyidea.actions.GuiceActionGroup" text="Google Guice">
+			<action id="NewGuiceModule" class="com.sixrr.guiceyidea.actions.NewGuiceModuleAction" text="Guice Module" description="New Guice Module"/>
+			<action id="NewGuiceProvider" class="com.sixrr.guiceyidea.actions.NewGuiceProviderAction" text="Guice Provider"
+					description="New Guice Provider"/>
+			<action id="NewGuiceBindingAnnotation" class="com.sixrr.guiceyidea.actions.NewGuiceBindingAnnotationAction"
+					text="Guice Binding Annotation" description="New Guice Binding Annotation"/>
+			<action id="NewGuiceScopeAnnotation" class="com.sixrr.guiceyidea.actions.NewGuiceScopeAnnotationAction" text="Guice Scope Annotation"
+					description="New Guice Scope Annotation"/>
+			<action id="NewGuiceMethodInterceptor" class="com.sixrr.guiceyidea.actions.NewGuiceMethodInterceptorAction"
+					text="Guice Method Interceptor" description="New Guice Method Interceptor"/>
+			<add-to-group group-id="NewGroup" anchor="last"/>
+		</group>
+	</actions>
+</consulo-plugin>
