@@ -1,12 +1,12 @@
 package consulo.google.guice.module.extension;
 
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.icon.GoogleGuiceIconGroup;
 import consulo.localize.LocalizeValue;
 import consulo.module.content.layer.ModuleExtensionProvider;
 import consulo.module.content.layer.ModuleRootLayer;
 import consulo.module.extension.ModuleExtension;
 import consulo.module.extension.MutableModuleExtension;
-import consulo.platform.base.icon.PlatformIconGroup;
 import consulo.ui.image.Image;
 
 import javax.annotation.Nonnull;
@@ -44,7 +44,7 @@ public class GoogleGuiceModuleExtensionProvider implements ModuleExtensionProvid
 	@Override
 	public Image getIcon()
 	{
-		return PlatformIconGroup.providersGoogle();
+		return GoogleGuiceIconGroup.google_small();
 	}
 
 	@Nonnull

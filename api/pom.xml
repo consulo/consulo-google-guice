@@ -40,7 +40,20 @@
 		</repository>
 	</repositories>
 
-	<dependencies>
-
-	</dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>consulo.maven</groupId>
+				<artifactId>maven-consulo-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>generate-sources</phase>
+						<goals>
+							<goal>generate-icon</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

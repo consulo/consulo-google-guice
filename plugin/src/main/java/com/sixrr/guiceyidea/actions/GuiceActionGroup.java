@@ -18,7 +18,7 @@ package com.sixrr.guiceyidea.actions;
 
 import com.intellij.java.language.psi.JavaDirectoryService;
 import com.sixrr.guiceyidea.GuiceyIDEABundle;
-import consulo.application.AllIcons;
+import consulo.google.guice.icon.GoogleGuiceIconGroup;
 import consulo.google.guice.module.extension.GoogleGuiceModuleExtension;
 import consulo.ide.IdeView;
 import consulo.language.editor.LangDataKeys;
@@ -42,7 +42,7 @@ public class GuiceActionGroup extends DefaultActionGroup
 		super(GuiceyIDEABundle.message("action.group.guice.title"), true);
 		final Presentation presentation = getTemplatePresentation();
 		presentation.setDescription(GuiceyIDEABundle.message("action.group.guice.description"));
-		presentation.setIcon(AllIcons.Providers.Google);
+		presentation.setIcon(GoogleGuiceIconGroup.google_small());
 	}
 
 	@RequiredUIAccess
