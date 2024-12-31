@@ -33,7 +33,7 @@ import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.DefaultActionGroup;
 import consulo.ui.ex.action.Presentation;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 public class GuiceActionGroup extends DefaultActionGroup
 {

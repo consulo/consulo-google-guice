@@ -22,7 +22,7 @@ import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import consulo.annotation.component.ExtensionImpl;
 import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
 
-import javax.annotation.Nonnull;
+import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class MultipleInjectedConstructorsForClassInspection extends BaseInspection{
