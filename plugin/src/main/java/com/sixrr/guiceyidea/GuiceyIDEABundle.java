@@ -15,27 +15,29 @@
  */
 package com.sixrr.guiceyidea;
 
+import consulo.annotation.DeprecationInfo;
+import consulo.annotation.internal.MigratedExtensionsTo;
 import consulo.component.util.localize.AbstractBundle;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import org.jetbrains.annotations.PropertyKey;
 
-public class GuiceyIDEABundle extends AbstractBundle
-{
-	private static final String BUNDLE = "com.sixrr.guiceyidea.GuiceyIDEABundle";
+@Deprecated
+@DeprecationInfo("Use GoogleGuiceLocalize")
+@MigratedExtensionsTo(GoogleGuiceLocalize.class)
+public class GuiceyIDEABundle extends AbstractBundle {
+    private static final String BUNDLE = "com.sixrr.guiceyidea.GuiceyIDEABundle";
 
-	private static final GuiceyIDEABundle ourInstance = new GuiceyIDEABundle();
+    private static final GuiceyIDEABundle ourInstance = new GuiceyIDEABundle();
 
-	private GuiceyIDEABundle()
-	{
-		super(BUNDLE);
-	}
+    private GuiceyIDEABundle() {
+        super(BUNDLE);
+    }
 
-	public static String message(@PropertyKey(resourceBundle = BUNDLE) String key)
-	{
-		return ourInstance.getMessage(key);
-	}
+    public static String message(@PropertyKey(resourceBundle = BUNDLE) String key) {
+        return ourInstance.getMessage(key);
+    }
 
-	public static String message(@PropertyKey(resourceBundle = BUNDLE) String key, Object... params)
-	{
-		return ourInstance.getMessage(key, params);
-	}
+    public static String message(@PropertyKey(resourceBundle = BUNDLE) String key, Object... params) {
+        return ourInstance.getMessage(key, params);
+    }
 }

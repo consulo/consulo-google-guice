@@ -16,57 +16,49 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.psi.PsiDirectory;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.ex.awt.Messages;
-
 import jakarta.annotation.Nonnull;
 
-public class NewGuiceMethodInterceptorAction extends GeneratePluginClassAction
-{
-	public NewGuiceMethodInterceptorAction()
-	{
-		super(GuiceyIDEABundle.message("new.guice.method.interceptor.action.name"), GuiceyIDEABundle.message("new.guice.method.interceptor.action.name"), null);
-	}
+public class NewGuiceMethodInterceptorAction extends GeneratePluginClassAction {
+    public NewGuiceMethodInterceptorAction() {
+        super(GoogleGuiceLocalize.newGuiceMethodInterceptorActionName(), GoogleGuiceLocalize.newGuiceMethodInterceptorActionName(), null);
+    }
 
-	@Override
-	@Nonnull
-	protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory)
-	{
-		final String InterceptorName = Messages.showInputDialog("Name for new Method Interceptor", "Create Guice Method Interceptor", Messages.getQuestionIcon());
-		if(InterceptorName != null)
-		{
-			final MyInputValidator validator = new MyInputValidator(project, directory);
-			validator.canClose(InterceptorName);
-			return validator.getCreatedElements();
-		}
-		return PsiElement.EMPTY_ARRAY;
-	}
+    @Override
+    @Nonnull
+    protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory) {
+        final String InterceptorName = Messages.showInputDialog("Name for new Method Interceptor", "Create Guice Method Interceptor", Messages.getQuestionIcon());
+        if (InterceptorName != null) {
+            final MyInputValidator validator = new MyInputValidator(project, directory);
+            validator.canClose(InterceptorName);
+            return validator.getCreatedElements();
+        }
+        return PsiElement.EMPTY_ARRAY;
+    }
 
-	@Nonnull
-	@Override
-	protected String getTemplateName()
-	{
-		return "Google Guice Method Interceptor";
-	}
+    @Nonnull
+    @Override
+    protected String getTemplateName() {
+        return "Google Guice Method Interceptor";
+    }
 
-	@Override
-	protected String getErrorTitle()
-	{
-		return GuiceyIDEABundle.message("new.guice.method.interceptor.error");
-	}
+    @Override
+    protected LocalizeValue getErrorTitle() {
+        return GoogleGuiceLocalize.newGuiceMethodInterceptorError();
+    }
 
-	@Override
-	protected String getCommandName()
-	{
-		return GuiceyIDEABundle.message("new.guice.method.interceptor.command");
-	}
+    @Override
+    protected LocalizeValue getCommandName() {
+        return GoogleGuiceLocalize.newGuiceMethodInterceptorCommand();
+    }
 
-	@Override
-	protected String getActionName(PsiDirectory directory, String newName)
-	{
-		return GuiceyIDEABundle.message("new.guice.method.interceptor.name", directory, newName);
-	}
+    @Override
+    protected LocalizeValue getActionName(PsiDirectory directory, String newName) {
+        return GoogleGuiceLocalize.newGuiceMethodInterceptorName(directory, newName);
+    }
 }

@@ -1,0 +1,154 @@
+action.group.guice.description:
+    text: Created Google Guice components
+action.group.guice.title:
+    text: Google Guice
+binding.annotation.without.inject.display.name:
+    text: Binding annotations without @Inject
+binding.annotation.without.inject.problem.descriptor:
+    text: 'Binding annotation #ref without @Inject declared #loc'
+conflicting.annotations.display.name:
+    text: Conflicting Guice annotations
+conflicting.annotations.problem.descriptor:
+    text: 'Annotation #ref conflicts with other declared annotations #loc'
+guice.intentions:
+    text: Guice
+inject.of.non.public.field.problem.descriptor:
+    text: 'Non-public field #ref declared as @Inject #loc'
+inject.of.non.public.member.display.name:
+    text: '@Inject of non-public field or method'
+inject.of.non.public.method.problem.descriptor:
+    text: 'Non-public field #ref declared as @Inject #loc'
+interception.annotation.without.runtime.retention.display.name:
+    text: Interception annotation without runtime retention
+interception.annotation.without.runtime.retention.problem.descriptor:
+    text: 'Annotation #ref does not have Runtime retention #loc'
+invalid.implemented.by.display.name:
+    text: Invalid @ImplementedBy annotation
+invalid.implemented.by.problem.descriptor:
+    text: 'Class #ref doesn''t implement annotated class #loc'
+invalid.provided.by.display.name:
+    text: Invalid @ProvidedBy annotation
+invalid.provided.by.problem.descriptor:
+    text: 'Class #ref doesn''t provide annotated class #loc'
+invalid.request.parameters.display.name:
+    text: Incorrect type for @RequestParemeters parameters
+invalid.request.parameters.problem.descriptor:
+    text: 'Variables or parameters labeled #ref must have type Map<String, String[]> #loc'
+make.injection.mandatory:
+    text: Make injection mandatory
+make.injection.optional:
+    text: Make injection optional
+make.public:
+    text: Make public
+move.binding.scope.to.class.family.name:
+    text: Move Binding Scope To Class
+move.binding.scope.to.class.text:
+    text: Move binding scope to class
+move.binding.to.class.family.name:
+    text: Move Binding To Class
+move.binding.to.class.text:
+    text: Move binding class to class
+move.providedby.to.bindings.family.name:
+    text: Move ProvidedBy To Bindings
+move.providedby.to.bindings.text:
+    text: Move @ProvidedBy to bindings
+move.provider.binding.to.class.family.name:
+    text: Move Provider Binding To Class
+move.provider.binding.to.class.text:
+    text: Move provider binding to class
+multiple.binding.annotations.display.name:
+    text: Multiple binding annotations on variable
+multiple.binding.annotations.problem.descriptor:
+    text: 'Variable #ref has multiple binding annotations #loc'
+multiple.injected.constructors.for.class.display.name:
+    text: Multiple @Inject constructors for class
+multiple.injected.constructors.for.class.problem.descriptor:
+    text: 'Class #ref has multiple @Inject constructors #loc'
+new.guice.binding.annotation.action.name:
+    text: Create Guice binding annotation
+new.guice.binding.annotation.command:
+    text: Create Guice Binding Annotation
+new.guice.binding.annotation.error:
+    text: Cannot create Guice binding annotation
+new.guice.binding.annotation.name:
+    text: 'Creating Guice binding annotation: {0}.{1}'
+new.guice.method.interceptor.action.name:
+    text: Create Guice method interceptor
+new.guice.method.interceptor.command:
+    text: Create Guice Method Interceptor
+new.guice.method.interceptor.error:
+    text: Cannot create Guice method interceptor
+new.guice.method.interceptor.name:
+    text: 'Creating Guice method interceptor: {0}.{1}'
+new.guice.module.action.name:
+    text: Create Guice module
+new.guice.module.command:
+    text: Create Guice Module
+new.guice.module.error:
+    text: Cannot create Guice module
+new.guice.module.name:
+    text: 'Creating Guice module: {0}.{1}'
+new.guice.provider.action.name:
+    text: Create Guice provider
+new.guice.provider.command:
+    text: Create Guice Provider
+new.guice.provider.error:
+    text: Cannot create Guice provider
+new.guice.provider.name:
+    text: 'Creating Guice provider: {0}.{1}'
+new.guice.scope.annotation.action.name:
+    text: Create Guice scope annotation
+new.guice.scope.annotation.command:
+    text: Create Guice Scope Annotation
+new.guice.scope.annotation.error:
+    text: Cannot create Guice scope annotation
+new.guice.scope.annotation.name:
+    text: 'Creating Guice scope annotation: {0}.{1}'
+pointless.binding.display.name:
+    text: Pointless binding
+pointless.binding.problem.descriptor:
+    text: 'Binding is unnecessary, and can be removed #loc'
+redundant.scope.binding.display.name:
+    text: Redundant scope binding
+redundant.scope.binding.problem.descriptor:
+    text: 'Binding to scope #ref is redundant #loc'
+redundant.to.binding.display.name:
+    text: Redundant binding
+redundant.to.binding.problem.descriptor:
+    text: 'Binding to class #ref is redundant#loc'
+redundant.to.provider.binding.display.name:
+    text: Redundant provider binding
+redundant.to.provider.binding.problem.descriptor:
+    text: 'Binding to class #ref is redundant #loc'
+select.provided.class:
+    text: Select class to provide
+session.scoped.injects.request.scoped.display.name:
+    text: '@SessionScoped component injects @RequestScoped component'
+session.scoped.injects.request.scoped.problem.descriptor:
+    text: '@Inject of @RequestScoped class #ref from @SessionScoped class #loc'
+singleton.injects.scoped.display.name:
+    text: '@Singleton component injects scoped component'
+singleton.injects.scoped.problem.descriptor:
+    text: '@Inject of scoped class #ref from @Singleton class #loc'
+toggle.injection.required.family.name:
+    text: Toggle Injection Required
+toggle.required:
+    text: Toggle 'optional'
+uninstantiable.binding.display.name:
+    text: Uninstantiable binding
+uninstantiable.binding.problem.descriptor:
+    text: 'Class #ref is uninstantiable, and thus can not be bound #loc'
+uninstantiable.implemented.by.class.display.name:
+    text: Uninstantiable @ImplementedBy class
+uninstantiable.implemented.by.class.problem.descriptor:
+    text: 'Class #ref is uninstantiable, and thus can not be @ImplementedBy #loc'
+uninstantiable.provided.by.class.display.name:
+    text: Uninstantiable @ProvidedBy class
+uninstantiable.provided.by.class.problem.descriptor:
+    text: 'Class #ref is uninstantiable, and thus can not be @ProvidedBy #loc'
+unnecessary.static.injection.display.name:
+    text: Unnecessary static injection
+unnecessary.static.injection.problem.descriptor:
+    text: 'Class #ref has no static @Inject members #loc'
+user.name:
+    text: '&User name'

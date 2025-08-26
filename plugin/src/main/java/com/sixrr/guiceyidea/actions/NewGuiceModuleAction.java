@@ -16,57 +16,49 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.psi.PsiDirectory;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.ex.awt.Messages;
-
 import jakarta.annotation.Nonnull;
 
-public class NewGuiceModuleAction extends GeneratePluginClassAction
-{
-	public NewGuiceModuleAction()
-	{
-		super(GuiceyIDEABundle.message("new.guice.module.action.name"), GuiceyIDEABundle.message("new.guice.module.action.name"), null);
-	}
+public class NewGuiceModuleAction extends GeneratePluginClassAction {
+    public NewGuiceModuleAction() {
+        super(GoogleGuiceLocalize.newGuiceModuleActionName(), GoogleGuiceLocalize.newGuiceModuleActionName(), null);
+    }
 
-	@Nonnull
-	@Override
-	protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory)
-	{
-		final String moduleName = Messages.showInputDialog("Name for new module", "Create Guice Module", Messages.getQuestionIcon());
-		if(moduleName != null)
-		{
-			final MyInputValidator validator = new MyInputValidator(project, directory);
-			validator.canClose(moduleName);
-			return validator.getCreatedElements();
-		}
-		return PsiElement.EMPTY_ARRAY;
-	}
+    @Nonnull
+    @Override
+    protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory) {
+        final String moduleName = Messages.showInputDialog("Name for new module", "Create Guice Module", Messages.getQuestionIcon());
+        if (moduleName != null) {
+            final MyInputValidator validator = new MyInputValidator(project, directory);
+            validator.canClose(moduleName);
+            return validator.getCreatedElements();
+        }
+        return PsiElement.EMPTY_ARRAY;
+    }
 
-	@Nonnull
-	@Override
-	protected String getTemplateName()
-	{
-		return "Google Guice Module";
-	}
+    @Nonnull
+    @Override
+    protected String getTemplateName() {
+        return "Google Guice Module";
+    }
 
-	@Override
-	protected String getErrorTitle()
-	{
-		return GuiceyIDEABundle.message("new.guice.module.error");
-	}
+    @Override
+    protected LocalizeValue getErrorTitle() {
+        return GoogleGuiceLocalize.newGuiceModuleError();
+    }
 
-	@Override
-	protected String getCommandName()
-	{
-		return GuiceyIDEABundle.message("new.guice.module.command");
-	}
+    @Override
+    protected LocalizeValue getCommandName() {
+        return GoogleGuiceLocalize.newGuiceModuleCommand();
+    }
 
-	@Override
-	protected String getActionName(PsiDirectory directory, String newName)
-	{
-		return GuiceyIDEABundle.message("new.guice.module.name", directory, newName);
-	}
+    @Override
+    protected LocalizeValue getActionName(PsiDirectory directory, String newName) {
+        return GoogleGuiceLocalize.newGuiceModuleName(directory, newName);
+    }
 }

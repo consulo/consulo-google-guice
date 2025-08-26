@@ -16,73 +16,65 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.psi.PsiDirectory;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public class NewGuiceProviderAction extends GeneratePluginClassAction
-{
-	private String myProvidedClassName;
+public class NewGuiceProviderAction extends GeneratePluginClassAction {
+    private String myProvidedClassName;
 
-	public NewGuiceProviderAction()
-	{
-		super(GuiceyIDEABundle.message("new.guice.provider.action.name"), GuiceyIDEABundle.message("new.guice.provider.action.name"), null);
-	}
+    public NewGuiceProviderAction() {
+        super(GoogleGuiceLocalize.newGuiceProviderActionName(), GoogleGuiceLocalize.newGuiceProviderActionName(), null);
+    }
 
-	@Override
-	@Nonnull
-	protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory)
-	{
-		final ProviderDialog dialog = new ProviderDialog(project);
-		dialog.show();
-		if(dialog.isOK())
-		{
-			final String providerName = dialog.getProviderName();
-			myProvidedClassName = dialog.getProvidedClass();
-			final MyInputValidator validator = new MyInputValidator(project, directory);
-			validator.canClose(providerName);
-			return validator.getCreatedElements();
-		}
-		return PsiElement.EMPTY_ARRAY;
-	}
+    @Override
+    @Nonnull
+    protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory) {
+        final ProviderDialog dialog = new ProviderDialog(project);
+        dialog.show();
+        if (dialog.isOK()) {
+            final String providerName = dialog.getProviderName();
+            myProvidedClassName = dialog.getProvidedClass();
+            final MyInputValidator validator = new MyInputValidator(project, directory);
+            validator.canClose(providerName);
+            return validator.getCreatedElements();
+        }
+        return PsiElement.EMPTY_ARRAY;
+    }
 
-	@Nullable
-	@Override
-	protected Map<String, Object> getProperties()
-	{
-		Map<String, Object> properties = new HashMap<>();
-		properties.put("PROVIDER_CLASS_NAME", myProvidedClassName);
-		return properties;
-	}
+    @Nullable
+    @Override
+    protected Map<String, Object> getProperties() {
+        Map<String, Object> properties = new HashMap<>();
+        properties.put("PROVIDER_CLASS_NAME", myProvidedClassName);
+        return properties;
+    }
 
-	@Nonnull
-	@Override
-	protected String getTemplateName()
-	{
-		return "Google Guice Provider";
-	}
+    @Nonnull
+    @Override
+    protected String getTemplateName() {
+        return "Google Guice Provider";
+    }
 
-	@Override
-	protected String getErrorTitle()
-	{
-		return GuiceyIDEABundle.message("new.guice.provider.error");
-	}
+    @Override
+    protected LocalizeValue getErrorTitle() {
+        return GoogleGuiceLocalize.newGuiceProviderError();
+    }
 
-	@Override
-	protected String getCommandName()
-	{
-		return GuiceyIDEABundle.message("new.guice.provider.command");
-	}
+    @Override
+    protected LocalizeValue getCommandName() {
+        return GoogleGuiceLocalize.newGuiceProviderCommand();
+    }
 
-	@Override
-	protected String getActionName(PsiDirectory directory, String newName)
-	{
-		return GuiceyIDEABundle.message("new.guice.provider.name", directory, newName);
-	}
+    @Override
+    protected LocalizeValue getActionName(PsiDirectory directory, String newName) {
+        return GoogleGuiceLocalize.newGuiceProviderName(directory, newName);
+    }
 }

@@ -16,57 +16,49 @@
 
 package com.sixrr.guiceyidea.actions;
 
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.psi.PsiDirectory;
 import consulo.language.psi.PsiElement;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
 import consulo.ui.ex.awt.Messages;
-
 import jakarta.annotation.Nonnull;
 
-public class NewGuiceScopeAnnotationAction extends GeneratePluginClassAction
-{
-	public NewGuiceScopeAnnotationAction()
-	{
-		super(GuiceyIDEABundle.message("new.guice.scope.annotation.action.name"), GuiceyIDEABundle.message("new.guice.scope.annotation.action.name"), null);
-	}
+public class NewGuiceScopeAnnotationAction extends GeneratePluginClassAction {
+    public NewGuiceScopeAnnotationAction() {
+        super(GoogleGuiceLocalize.newGuiceScopeAnnotationActionName(), GoogleGuiceLocalize.newGuiceScopeAnnotationActionName(), null);
+    }
 
-	@Override
-	@Nonnull
-	protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory)
-	{
-		final String annotationName = Messages.showInputDialog("Name for new scope annotation", "Create Guice Scope Annotation", Messages.getQuestionIcon());
-		if(annotationName != null)
-		{
-			final MyInputValidator validator = new MyInputValidator(project, directory);
-			validator.canClose(annotationName);
-			return validator.getCreatedElements();
-		}
-		return PsiElement.EMPTY_ARRAY;
-	}
+    @Override
+    @Nonnull
+    protected PsiElement[] invokeDialogImpl(Project project, PsiDirectory directory) {
+        final String annotationName = Messages.showInputDialog("Name for new scope annotation", "Create Guice Scope Annotation", Messages.getQuestionIcon());
+        if (annotationName != null) {
+            final MyInputValidator validator = new MyInputValidator(project, directory);
+            validator.canClose(annotationName);
+            return validator.getCreatedElements();
+        }
+        return PsiElement.EMPTY_ARRAY;
+    }
 
-	@Nonnull
-	@Override
-	protected String getTemplateName()
-	{
-		return "Google Guice Scope Annotation";
-	}
+    @Nonnull
+    @Override
+    protected String getTemplateName() {
+        return "Google Guice Scope Annotation";
+    }
 
-	@Override
-	protected String getErrorTitle()
-	{
-		return GuiceyIDEABundle.message("new.guice.scope.annotation.error");
-	}
+    @Override
+    protected LocalizeValue getErrorTitle() {
+        return GoogleGuiceLocalize.newGuiceScopeAnnotationError();
+    }
 
-	@Override
-	protected String getCommandName()
-	{
-		return GuiceyIDEABundle.message("new.guice.scope.annotation.command");
-	}
+    @Override
+    protected LocalizeValue getCommandName() {
+        return GoogleGuiceLocalize.newGuiceScopeAnnotationCommand();
+    }
 
-	@Override
-	protected String getActionName(PsiDirectory directory, String newName)
-	{
-		return GuiceyIDEABundle.message("new.guice.scope.annotation.name", directory, newName);
-	}
+    @Override
+    protected LocalizeValue getActionName(PsiDirectory directory, String newName) {
+        return GoogleGuiceLocalize.newGuiceScopeAnnotationName(directory, newName);
+    }
 }
