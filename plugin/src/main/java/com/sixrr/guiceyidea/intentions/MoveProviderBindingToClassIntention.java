@@ -19,39 +19,33 @@ package com.sixrr.guiceyidea.intentions;
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiExpression;
 import com.intellij.java.language.psi.PsiMethodCallExpression;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
 import com.sixrr.guiceyidea.utils.MutationUtils;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.IncorrectOperationException;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 @IntentionMetaData(ignoreId = "google.guice.move.provider.binding.to.class", categories = {
-		"Java",
-		"Google Guice"
+    "Java",
+    "Google Guice"
 }, fileExtensions = "java")
-public class MoveProviderBindingToClassIntention extends Intention{
+public class MoveProviderBindingToClassIntention extends Intention {
     @Nonnull
-    public String getText(){
-        return GuiceyIDEABundle.message("move.provider.binding.to.class.text");
+    public LocalizeValue getText() {
+        return GoogleGuiceLocalize.moveProviderBindingToClassText();
     }
 
     @Nonnull
-    public String getFamilyName(){
-        return GuiceyIDEABundle.message("move.provider.binding.to.class.family.name");
-    }
-
-    @Nonnull
-    protected PsiElementPredicate getElementPredicate(){
+    protected PsiElementPredicate getElementPredicate() {
         return new MoveProviderBindingToClassPredicate();
     }
 
-    protected void processIntention(@Nonnull PsiElement element) throws IncorrectOperationException
-	{
+    protected void processIntention(@Nonnull PsiElement element) throws IncorrectOperationException {
         final PsiMethodCallExpression originalCall = (PsiMethodCallExpression) element;
         final PsiClass providerClass = GuiceUtils.findProvidingClassForBinding(originalCall);
         final PsiClass implementedClass = GuiceUtils.findImplementedClassForBinding(originalCall);

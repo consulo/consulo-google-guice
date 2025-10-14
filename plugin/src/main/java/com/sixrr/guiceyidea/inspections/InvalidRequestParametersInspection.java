@@ -19,10 +19,10 @@ package com.sixrr.guiceyidea.inspections;
 import com.intellij.java.language.psi.PsiAnnotation;
 import com.intellij.java.language.psi.PsiType;
 import com.intellij.java.language.psi.PsiVariable;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.psi.util.PsiTreeUtil;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
@@ -30,11 +30,17 @@ public class InvalidRequestParametersInspection extends BaseInspection{
 
     @Nonnull
     protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("invalid.request.parameters.problem.descriptor");
+        return GoogleGuiceLocalize.invalidRequestParametersProblemDescriptor().get();
     }
 
     public BaseInspectionVisitor buildVisitor(){
         return new Visitor();
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return GoogleGuiceLocalize.invalidRequestParametersDisplayName();
     }
 
     private static class Visitor extends BaseInspectionVisitor{

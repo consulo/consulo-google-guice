@@ -21,12 +21,12 @@ import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiExpression;
 import com.intellij.java.language.psi.PsiMethodCallExpression;
 import com.intellij.java.language.psi.PsiReferenceExpression;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.psi.PsiElement;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -35,7 +35,13 @@ public class RedundantScopeBindingInspection extends BaseInspection{
 
     @Nonnull
     protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("redundant.scope.binding.problem.descriptor");
+        return GoogleGuiceLocalize.redundantScopeBindingProblemDescriptor().get();
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return GoogleGuiceLocalize.redundantScopeBindingDisplayName();
     }
 
     public BaseInspectionVisitor buildVisitor(){

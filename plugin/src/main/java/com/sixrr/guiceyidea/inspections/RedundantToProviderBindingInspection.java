@@ -18,13 +18,13 @@ package com.sixrr.guiceyidea.inspections;
 
 import com.intellij.java.language.codeInsight.AnnotationUtil;
 import com.intellij.java.language.psi.*;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.AnnotationUtils;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.psi.PsiElement;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -33,7 +33,13 @@ public class RedundantToProviderBindingInspection extends BaseInspection{
 
     @Nonnull
     protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("redundant.to.provider.binding.problem.descriptor");
+        return GoogleGuiceLocalize.redundantToProviderBindingProblemDescriptor().get();
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return GoogleGuiceLocalize.redundantToProviderBindingDisplayName();
     }
 
     public BaseInspectionVisitor buildVisitor(){

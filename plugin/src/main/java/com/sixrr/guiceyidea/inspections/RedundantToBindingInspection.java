@@ -18,13 +18,13 @@ package com.sixrr.guiceyidea.inspections;
 
 import com.intellij.java.language.codeInsight.AnnotationUtil;
 import com.intellij.java.language.psi.*;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.AnnotationUtils;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.psi.PsiElement;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -33,7 +33,7 @@ public class RedundantToBindingInspection extends BaseInspection{
 
     @Nonnull
     protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("redundant.to.binding.problem.descriptor");
+        return GoogleGuiceLocalize.redundantToBindingProblemDescriptor().get();
     }
 
     public BaseInspectionVisitor buildVisitor(){
@@ -43,6 +43,12 @@ public class RedundantToBindingInspection extends BaseInspection{
     @Nullable
     public LocalQuickFix buildFix(PsiElement location, Object[] infos){
         return new DeleteBindingFix();
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return GoogleGuiceLocalize.redundantToBindingDisplayName();
     }
 
     private static class Visitor extends BaseInspectionVisitor{

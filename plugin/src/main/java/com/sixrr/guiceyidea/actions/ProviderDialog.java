@@ -21,14 +21,14 @@ import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiNameHelper;
 import com.intellij.java.language.util.TreeClassChooser;
 import com.intellij.java.language.util.TreeClassChooserFactory;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.psi.scope.GlobalSearchScope;
 import consulo.project.Project;
 import consulo.ui.ex.awt.DialogWrapper;
 import consulo.ui.ex.awt.FixedSizeButton;
+import jakarta.annotation.Nullable;
 import org.jetbrains.annotations.NonNls;
 
-import jakarta.annotation.Nullable;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -36,13 +36,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ProviderDialog extends DialogWrapper implements DocumentListener{
+public class ProviderDialog extends DialogWrapper implements DocumentListener {
     private JTextField providerNameField = null;
     private JTextField providedClassField = null;
     private FixedSizeButton classChooserButton = null;
     private final Project project;
 
-    protected ProviderDialog(Project project){
+    protected ProviderDialog(Project project) {
         super(project, true);
         this.project = project;
         setModal(true);
@@ -52,12 +52,12 @@ public class ProviderDialog extends DialogWrapper implements DocumentListener{
     }
 
     @NonNls
-    protected String getDimensionServiceKey(){
+    protected String getDimensionServiceKey() {
         return "GuiceyIDEA.NewGuiceProvider";
     }
 
     @Nullable
-    protected JComponent createCenterPanel(){
+    protected JComponent createCenterPanel() {
         final JPanel panel = new JPanel(new GridBagLayout());
 
         final GridBagConstraints gbConstraints = new GridBagConstraints();
@@ -82,20 +82,20 @@ public class ProviderDialog extends DialogWrapper implements DocumentListener{
         providedClassField = new JTextField();
         providedClassField.getDocument().addDocumentListener(this);
         classChooserButton = new FixedSizeButton(providedClassField);
-        classChooserButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e){
+        classChooserButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
                 final GlobalSearchScope scope = GlobalSearchScope.allScope(project);
-                final TreeClassChooser chooser = TreeClassChooserFactory.getInstance(project).createInheritanceClassChooser(GuiceyIDEABundle.message("select.provided.class"), scope, null, null);
+                final TreeClassChooser chooser = TreeClassChooserFactory.getInstance(project).createInheritanceClassChooser(GoogleGuiceLocalize.selectProvidedClass().get(), scope, null, null);
 
                 final String classText = classChooserButton.getText();
                 final PsiClass currentClass =
-                        JavaPsiFacade.getInstance(project).findClass(classText, GlobalSearchScope.allScope(project));
-                if(currentClass != null){
+                    JavaPsiFacade.getInstance(project).findClass(classText, GlobalSearchScope.allScope(project));
+                if (currentClass != null) {
                     chooser.select(currentClass);
                 }
                 chooser.showDialog();
                 final PsiClass selectedClass = chooser.getSelected();
-                if(selectedClass != null){
+                if (selectedClass != null) {
                     final String className = selectedClass.getQualifiedName();
                     providedClassField.setText(className);
                     validateButtons();
@@ -117,11 +117,11 @@ public class ProviderDialog extends DialogWrapper implements DocumentListener{
         return panel;
     }
 
-    public String getProviderName(){
+    public String getProviderName() {
         return providerNameField.getText();
     }
 
-    private void validateButtons(){
+    private void validateButtons() {
         final JavaPsiFacade manager = JavaPsiFacade.getInstance(project);
         final PsiNameHelper nameHelper = manager.getNameHelper();
 
@@ -131,19 +131,19 @@ public class ProviderDialog extends DialogWrapper implements DocumentListener{
         getOKAction().setEnabled(valid);
     }
 
-    public String getProvidedClass(){
+    public String getProvidedClass() {
         return providedClassField.getText();
     }
 
-    public void insertUpdate(DocumentEvent event){
+    public void insertUpdate(DocumentEvent event) {
         validateButtons();
     }
 
-    public void removeUpdate(DocumentEvent event){
+    public void removeUpdate(DocumentEvent event) {
         validateButtons();
     }
 
-    public void changedUpdate(DocumentEvent event){
+    public void changedUpdate(DocumentEvent event) {
         validateButtons();
     }
 }

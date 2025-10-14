@@ -18,41 +18,36 @@ package com.sixrr.guiceyidea.inspections;
 
 import com.intellij.java.language.psi.PsiExpression;
 import com.intellij.java.language.psi.PsiMethodCallExpression;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.MutationUtils;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.psi.util.PsiTreeUtil;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.project.Project;
-
 import jakarta.annotation.Nonnull;
 
-class DeleteBindingFix implements LocalQuickFix
-{
+class DeleteBindingFix implements LocalQuickFix {
     private static final Logger LOGGER = Logger.getInstance("RedundantToProviderBindingInspection");
 
     @Nonnull
-    public String getName(){
-        return GuiceyIDEABundle.message("delete.binding");
-    }
-
-    @Nonnull
-    public String getFamilyName(){
-        return "";
+    public LocalizeValue getName() {
+        return GoogleGuiceLocalize.deleteBinding();
     }
 
     @SuppressWarnings({"HardCodedStringLiteral"})
-    public void applyFix(@Nonnull Project project, ProblemDescriptor descriptor){
+    public void applyFix(@Nonnull Project project, ProblemDescriptor descriptor) {
         final PsiMethodCallExpression call =
-                PsiTreeUtil.getParentOfType(descriptor.getPsiElement(), PsiMethodCallExpression.class);
+            PsiTreeUtil.getParentOfType(descriptor.getPsiElement(), PsiMethodCallExpression.class);
         assert call != null;
         final PsiExpression qualifier = call.getMethodExpression().getQualifierExpression();
-        try{
+        try {
             assert qualifier != null;
             MutationUtils.replaceExpression(qualifier.getText(), call);
-        } catch(IncorrectOperationException e){
+        }
+        catch (IncorrectOperationException e) {
             LOGGER.error(e);
         }
     }

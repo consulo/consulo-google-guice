@@ -20,138 +20,130 @@ import com.intellij.java.language.psi.*;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.editor.inspection.ProblemsHolder;
-import consulo.language.editor.inspection.scheme.InspectionManager;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiWhiteSpace;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+
 import java.util.List;
 
-public abstract class BaseInspectionVisitor extends JavaElementVisitor
-{
+public abstract class BaseInspectionVisitor extends JavaElementVisitor {
     private BaseInspection inspection = null;
     private boolean onTheFly = false;
     private final List<ProblemDescriptor> errors = null;
     private ProblemsHolder holder = null;
-    private InspectionManager inspectionManager;
 
-    public void setInspection(BaseInspection inspection){
+    public void setInspection(BaseInspection inspection) {
         this.inspection = inspection;
     }
 
-    public void setOnTheFly(boolean onTheFly){
+    public void setOnTheFly(boolean onTheFly) {
         this.onTheFly = onTheFly;
     }
 
     protected void registerMethodCallError(PsiMethodCallExpression expression,
-                                           Object... infos){
+                                           Object... infos) {
         final PsiReferenceExpression methodExpression =
-                expression.getMethodExpression();
+            expression.getMethodExpression();
         final PsiElement nameToken = methodExpression.getReferenceNameElement();
-        registerError(nameToken != null?nameToken:expression, infos);
+        registerError(nameToken != null ? nameToken : expression, infos);
     }
 
     protected void registerStatementError(PsiStatement statement,
-                                          Object... infos){
+                                          Object... infos) {
         final PsiElement statementToken = statement.getFirstChild();
-        registerError(statementToken != null?statementToken:statement, infos);
+        registerError(statementToken != null ? statementToken : statement, infos);
     }
 
-    protected void registerClassError(PsiClass aClass, Object... infos){
+    protected void registerClassError(PsiClass aClass, Object... infos) {
         final PsiElement nameIdentifier;
-        if(aClass instanceof PsiAnonymousClass){
+        if (aClass instanceof PsiAnonymousClass) {
             final PsiAnonymousClass anonymousClass = (PsiAnonymousClass) aClass;
             nameIdentifier = anonymousClass.getBaseClassReference();
-        } else{
+        }
+        else {
             nameIdentifier = aClass.getNameIdentifier();
         }
-        registerError(nameIdentifier != null?nameIdentifier:aClass.getContainingFile(), infos);
+        registerError(nameIdentifier != null ? nameIdentifier : aClass.getContainingFile(), infos);
     }
 
-    protected void registerMethodError(PsiMethod method, Object... infos){
+    protected void registerMethodError(PsiMethod method, Object... infos) {
         final PsiElement nameIdentifier = method.getNameIdentifier();
-        registerError(nameIdentifier != null?nameIdentifier:method.getContainingFile(), infos);
+        registerError(nameIdentifier != null ? nameIdentifier : method.getContainingFile(), infos);
     }
 
-    protected void registerVariableError(PsiVariable variable, Object... infos){
+    protected void registerVariableError(PsiVariable variable, Object... infos) {
         final PsiElement nameIdentifier = variable.getNameIdentifier();
-        registerError(nameIdentifier != null?nameIdentifier:variable.getContainingFile(), infos);
+        registerError(nameIdentifier != null ? nameIdentifier : variable.getContainingFile(), infos);
     }
 
     protected void registerTypeParameterError(PsiTypeParameter param,
-                                              Object... infos){
+                                              Object... infos) {
         final PsiElement nameIdentifier = param.getNameIdentifier();
         registerError(nameIdentifier, infos);
     }
 
-    protected void registerFieldError(PsiField field, Object... infos){
+    protected void registerFieldError(PsiField field, Object... infos) {
         final PsiElement nameIdentifier = field.getNameIdentifier();
         registerError(nameIdentifier, infos);
     }
 
     protected void registerModifierError(String modifier,
                                          PsiModifierListOwner parameter,
-                                         Object... infos){
+                                         Object... infos) {
         final PsiModifierList modifiers = parameter.getModifierList();
-        if(modifiers == null){
+        if (modifiers == null) {
             return;
         }
         final PsiElement[] children = modifiers.getChildren();
-        for(final PsiElement child : children){
+        for (final PsiElement child : children) {
             final String text = child.getText();
-            if(modifier.equals(text)){
+            if (modifier.equals(text)) {
                 registerError(child, infos);
             }
         }
     }
 
-    protected void registerError(@Nonnull PsiElement location, Object... infos){
+    protected void registerError(@Nonnull PsiElement location, Object... infos) {
         final LocalQuickFix[] fixes = createFixes(location, infos);
         final String description = inspection.buildErrorString(infos);
         holder.registerProblem(location, description, fixes);
     }
 
     @Nullable
-    public ProblemDescriptor[] getErrors(){
-        if(errors == null){
+    public ProblemDescriptor[] getErrors() {
+        if (errors == null) {
             return null;
-        } else{
+        }
+        else {
             final int numErrors = errors.size();
             return errors.toArray(new ProblemDescriptor[numErrors]);
         }
     }
 
     @Nullable
-    private LocalQuickFix[] createFixes(PsiElement location, Object[] infos){
-        if(!onTheFly && inspection.buildQuickFixesOnlyForOnTheFlyErrors()){
+    private LocalQuickFix[] createFixes(PsiElement location, Object[] infos) {
+        if (!onTheFly && inspection.buildQuickFixesOnlyForOnTheFlyErrors()) {
             return null;
         }
 
         final LocalQuickFix fix = inspection.buildFix(location, infos);
-        if(fix == null){
+        if (fix == null) {
             return null;
         }
         return new LocalQuickFix[]{fix};
     }
 
-    public void visitReferenceExpression(PsiReferenceExpression expression){
+    public void visitReferenceExpression(PsiReferenceExpression expression) {
         visitExpression(expression);
     }
 
-    public void visitWhiteSpace(PsiWhiteSpace space){
+    public void visitWhiteSpace(PsiWhiteSpace space) {
         // none of our inspections need to do anything with white space,
         // so this is a performance optimization
     }
 
-    public void setProblemsHolder(ProblemsHolder holder){
+    public void setProblemsHolder(ProblemsHolder holder) {
         this.holder = holder;
-    }
-
-    public void initialize(){
-    }
-
-    public void setInspectionManager(InspectionManager inspectionManager){
-        this.inspectionManager = inspectionManager;
     }
 }

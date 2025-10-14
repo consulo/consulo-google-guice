@@ -18,10 +18,10 @@ package com.sixrr.guiceyidea.inspections;
 
 import com.intellij.java.language.codeInsight.AnnotationUtil;
 import com.intellij.java.language.psi.*;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.psi.PsiElement;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
@@ -29,11 +29,17 @@ public class MultipleBindingAnnotationsInspection extends BaseInspection{
 
     @Nonnull
     protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("multiple.binding.annotations.problem.descriptor");
+        return GoogleGuiceLocalize.multipleBindingAnnotationsProblemDescriptor().get();
     }
 
     public BaseInspectionVisitor buildVisitor(){
         return new Visitor();
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return GoogleGuiceLocalize.multipleBindingAnnotationsDisplayName();
     }
 
     private static class Visitor extends BaseInspectionVisitor{

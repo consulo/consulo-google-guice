@@ -18,10 +18,11 @@ package com.sixrr.guiceyidea.inspections;
 
 import com.intellij.java.language.codeInsight.AnnotationUtil;
 import com.intellij.java.language.psi.*;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import consulo.annotation.component.ExtensionImpl;
-
+import consulo.google.guice.localize.GoogleGuiceLocalize;
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
+
 import java.util.Collections;
 
 @ExtensionImpl
@@ -29,7 +30,13 @@ public class InterceptionAnnotationWithoutRuntimeRetentionInspection extends Bas
 
     @Nonnull
     protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("interception.annotation.without.runtime.retention.problem.descriptor");
+        return GoogleGuiceLocalize.interceptionAnnotationWithoutRuntimeRetentionProblemDescriptor().get();
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return GoogleGuiceLocalize.interceptionAnnotationWithoutRuntimeRetentionDisplayName();
     }
 
     public BaseInspectionVisitor buildVisitor(){

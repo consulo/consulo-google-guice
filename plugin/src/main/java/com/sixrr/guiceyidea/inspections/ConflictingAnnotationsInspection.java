@@ -19,18 +19,24 @@ package com.sixrr.guiceyidea.inspections;
 import com.intellij.java.language.codeInsight.AnnotationUtil;
 import com.intellij.java.language.psi.PsiAnnotation;
 import com.intellij.java.language.psi.PsiModifierListOwner;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.psi.PsiElement;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 public class ConflictingAnnotationsInspection extends BaseInspection{
 
     @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return GoogleGuiceLocalize.conflictingAnnotationsDisplayName();
+    }
+
+    @Nonnull
     protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("conflicting.annotations.problem.descriptor");
+        return GoogleGuiceLocalize.conflictingAnnotationsProblemDescriptor().get();
     }
 
     public BaseInspectionVisitor buildVisitor(){

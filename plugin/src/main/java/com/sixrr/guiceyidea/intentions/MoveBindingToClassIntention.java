@@ -19,38 +19,37 @@ package com.sixrr.guiceyidea.intentions;
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiExpression;
 import com.intellij.java.language.psi.PsiMethodCallExpression;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
 import com.sixrr.guiceyidea.utils.MutationUtils;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.IncorrectOperationException;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
 @IntentionMetaData(ignoreId = "google.guice.move.binding.class.to.class", categories = {
-		"Java",
-		"Google Guice"
+    "Java",
+    "Google Guice"
 }, fileExtensions = "java")
-public class MoveBindingToClassIntention extends Intention{
+public class MoveBindingToClassIntention extends Intention {
     @Nonnull
-    public String getText(){
-        return GuiceyIDEABundle.message("move.binding.to.class.text");
+    public LocalizeValue getText() {
+        return GoogleGuiceLocalize.moveBindingToClassText();
     }
 
     @Nonnull
-    protected PsiElementPredicate getElementPredicate(){
+    protected PsiElementPredicate getElementPredicate() {
         return new MoveBindingToClassPredicate();
     }
 
-    protected void processIntention(@Nonnull PsiElement element) throws IncorrectOperationException
-	{
+    protected void processIntention(@Nonnull PsiElement element) throws IncorrectOperationException {
         final PsiMethodCallExpression originalCall = (PsiMethodCallExpression) element;
         final PsiClass implmentingClass = GuiceUtils.findImplementingClassForBinding(originalCall);
         final PsiClass implementedClass = GuiceUtils.findImplementedClassForBinding(originalCall);
-        MutationUtils.addAnnotation(implementedClass, "@com.google.inject.ImplementedBy(" + implmentingClass.getQualifiedName() +".class)");
+        MutationUtils.addAnnotation(implementedClass, "@com.google.inject.ImplementedBy(" + implmentingClass.getQualifiedName() + ".class)");
         final PsiMethodCallExpression bindingCall = GuiceUtils.findBindingCallForBinding(originalCall);
         final PsiExpression qualifier = bindingCall.getMethodExpression().getQualifierExpression();
 

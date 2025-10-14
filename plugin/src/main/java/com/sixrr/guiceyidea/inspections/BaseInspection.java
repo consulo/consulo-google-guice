@@ -17,8 +17,8 @@
 package com.sixrr.guiceyidea.inspections;
 
 import com.intellij.java.language.JavaLanguage;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import consulo.annotation.access.RequiredReadAction;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.google.guice.module.extension.GoogleGuiceModuleExtension;
 import consulo.language.Language;
 import consulo.language.editor.inspection.LocalInspectionTool;
@@ -28,128 +28,78 @@ import consulo.language.editor.rawHighlight.HighlightDisplayLevel;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiElementVisitor;
 import consulo.language.util.ModuleUtilCore;
-import org.jetbrains.annotations.Nls;
-import org.jetbrains.annotations.NonNls;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-public abstract class BaseInspection extends LocalInspectionTool
-{
-	private String m_shortName = null;
-	@NonNls
-	private static final String INSPECTION = "Inspection";
+public abstract class BaseInspection extends LocalInspectionTool {
+    private String m_shortName = null;
 
-	@Nullable
-	@Override
-	public Language getLanguage()
-	{
-		return JavaLanguage.INSTANCE;
-	}
+    private static final String INSPECTION = "Inspection";
 
-	@Nonnull
-	@Override
-	public HighlightDisplayLevel getDefaultLevel()
-	{
-		return HighlightDisplayLevel.WARNING;
-	}
+    @Nullable
+    @Override
+    public Language getLanguage() {
+        return JavaLanguage.INSTANCE;
+    }
 
-	@Override
-	@Nls
-	@Nonnull
-	public String getGroupDisplayName()
-	{
-		return "Guice Inspections";
-	}
+    @Nonnull
+    @Override
+    public HighlightDisplayLevel getDefaultLevel() {
+        return HighlightDisplayLevel.WARNING;
+    }
 
-	@Override
-	@Nonnull
-	public String getShortName()
-	{
-		if(m_shortName != null)
-		{
-			return m_shortName;
-		}
-		final Class<? extends BaseInspection> aClass = getClass();
-		final String name = aClass.getName();
-		m_shortName = name.substring(name.lastIndexOf('.') + 1, name.length() - INSPECTION.length());
-		return m_shortName;
-	}
+    @Override
+    @Nonnull
+    public LocalizeValue getGroupDisplayName() {
+        return GoogleGuiceLocalize.guiceInspectionGroupName();
+    }
 
-	@Nonnull
-	protected abstract String buildErrorString(Object... infos);
+    @Override
+    @Nonnull
+    public String getShortName() {
+        if (m_shortName != null) {
+            return m_shortName;
+        }
+        final Class<? extends BaseInspection> aClass = getClass();
+        final String name = aClass.getName();
+        m_shortName = name.substring(name.lastIndexOf('.') + 1, name.length() - INSPECTION.length());
+        return m_shortName;
+    }
 
-	protected boolean buildQuickFixesOnlyForOnTheFlyErrors()
-	{
-		return false;
-	}
+    @Nonnull
+    protected abstract String buildErrorString(Object... infos);
 
-	private String getPropertyPrefixForInspection()
-	{
-		final String shortName = getShortName();
-		return getPrefix(shortName);
-	}
+    protected boolean buildQuickFixesOnlyForOnTheFlyErrors() {
+        return false;
+    }
 
-	public static String getPrefix(String shortName)
-	{
-		final int length = shortName.length();
-		final StringBuffer buffer = new StringBuffer(length + 10);
-		buffer.append(Character.toLowerCase(shortName.charAt(0)));
-		for(int i = 1; i < length; i++)
-		{
-			final char c = shortName.charAt(i);
-			if(Character.isUpperCase(c))
-			{
-				buffer.append('.');
-				buffer.append(Character.toLowerCase(c));
-			}
-			else
-			{
-				buffer.append(c);
-			}
-		}
-		return buffer.toString();
-	}
+    @Override
+    public boolean isEnabledByDefault() {
+        return true;
+    }
 
-	@Nonnull
-	@Override
-	public String getDisplayName()
-	{
-		@NonNls final String displayNameSuffix = ".display.name";
-		return GuiceyIDEABundle.message(getPropertyPrefixForInspection() + displayNameSuffix);
-	}
+    public abstract BaseInspectionVisitor buildVisitor();
 
-	@Override
-	public boolean isEnabledByDefault()
-	{
-		return true;
-	}
+    @Override
+    @Nonnull
+    @RequiredReadAction
+    public PsiElementVisitor buildVisitor(@Nonnull ProblemsHolder holder, boolean isOnTheFly) {
+        GoogleGuiceModuleExtension extension = ModuleUtilCore.getExtension(holder.getFile(), GoogleGuiceModuleExtension.class);
+        if (extension == null) {
+            return new PsiElementVisitor() {
+            };
+        }
 
-	public abstract BaseInspectionVisitor buildVisitor();
+        final BaseInspectionVisitor visitor = buildVisitor();
 
-	@Override
-	@Nonnull
-	@RequiredReadAction
-	public PsiElementVisitor buildVisitor(@Nonnull ProblemsHolder holder, boolean isOnTheFly)
-	{
-		GoogleGuiceModuleExtension extension = ModuleUtilCore.getExtension(holder.getFile(), GoogleGuiceModuleExtension.class);
-		if(extension == null)
-		{
-			return new PsiElementVisitor()
-			{
-			};
-		}
+        visitor.setProblemsHolder(holder);
+        visitor.setOnTheFly(isOnTheFly);
+        visitor.setInspection(this);
+        return visitor;
+    }
 
-		final BaseInspectionVisitor visitor = buildVisitor();
-
-		visitor.setProblemsHolder(holder);
-		visitor.setOnTheFly(isOnTheFly);
-		visitor.setInspection(this);
-		return visitor;
-	}
-
-	public LocalQuickFix buildFix(PsiElement location, Object[] infos)
-	{
-		return null;
-	}
+    public LocalQuickFix buildFix(PsiElement location, Object[] infos) {
+        return null;
+    }
 }

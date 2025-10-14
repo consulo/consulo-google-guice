@@ -18,10 +18,10 @@ package com.sixrr.guiceyidea.inspections;
 
 import com.intellij.java.language.psi.PsiClass;
 import com.intellij.java.language.psi.PsiMethod;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.google.guice.util.GoogleGuiceAnnotationUtil;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
@@ -29,11 +29,17 @@ public class MultipleInjectedConstructorsForClassInspection extends BaseInspecti
 
     @Nonnull
     protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("multiple.injected.constructors.for.class.problem.descriptor");
+        return GoogleGuiceLocalize.multipleInjectedConstructorsForClassProblemDescriptor().get();
     }
 
     public BaseInspectionVisitor buildVisitor(){
         return new Visitor();
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return GoogleGuiceLocalize.multipleInjectedConstructorsForClassDisplayName();
     }
 
     private static class Visitor extends BaseInspectionVisitor{

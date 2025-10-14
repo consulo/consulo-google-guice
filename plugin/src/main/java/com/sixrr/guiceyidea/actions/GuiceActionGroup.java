@@ -17,8 +17,8 @@
 package com.sixrr.guiceyidea.actions;
 
 import com.intellij.java.language.psi.JavaDirectoryService;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import consulo.google.guice.icon.GoogleGuiceIconGroup;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.google.guice.module.extension.GoogleGuiceModuleExtension;
 import consulo.ide.IdeView;
 import consulo.language.editor.LangDataKeys;
@@ -32,43 +32,34 @@ import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.DefaultActionGroup;
 import consulo.ui.ex.action.Presentation;
-
 import jakarta.annotation.Nonnull;
 
-public class GuiceActionGroup extends DefaultActionGroup
-{
-	public GuiceActionGroup()
-	{
-		super(GuiceyIDEABundle.message("action.group.guice.title"), true);
-		final Presentation presentation = getTemplatePresentation();
-		presentation.setDescription(GuiceyIDEABundle.message("action.group.guice.description"));
-		presentation.setIcon(GoogleGuiceIconGroup.google_small());
-	}
+public class GuiceActionGroup extends DefaultActionGroup {
+    public GuiceActionGroup() {
+        super(GoogleGuiceLocalize.actionGroupGuiceTitle(), GoogleGuiceLocalize.actionGroupGuiceDescription(), GoogleGuiceIconGroup.google_small());
+        setPopup(true);
+    }
 
-	@RequiredUIAccess
-	@Override
-	public void update(@Nonnull AnActionEvent e)
-	{
-		final Module module = e.getData(LangDataKeys.MODULE);
-		final IdeView view = e.getData(IdeView.KEY);
-		final Project project = e.getData(LangDataKeys.PROJECT);
-		final Presentation presentation = e.getPresentation();
+    @RequiredUIAccess
+    @Override
+    public void update(@Nonnull AnActionEvent e) {
+        final Module module = e.getData(LangDataKeys.MODULE);
+        final IdeView view = e.getData(IdeView.KEY);
+        final Project project = e.getData(LangDataKeys.PROJECT);
+        final Presentation presentation = e.getPresentation();
 
-		boolean visible = false;
-		if(module != null && ModuleUtilCore.getExtension(module, GoogleGuiceModuleExtension.class) != null && project != null && view != null)
-		{
-			final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-			final PsiDirectory[] dirs = view.getDirectories();
-			for(PsiDirectory dir : dirs)
-			{
-				if(projectFileIndex.isInSourceContent(dir.getVirtualFile()) && JavaDirectoryService.getInstance().getPackage(dir) != null)
-				{
-					visible = true;
-					break;
-				}
-			}
-		}
+        boolean visible = false;
+        if (module != null && ModuleUtilCore.getExtension(module, GoogleGuiceModuleExtension.class) != null && project != null && view != null) {
+            final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
+            final PsiDirectory[] dirs = view.getDirectories();
+            for (PsiDirectory dir : dirs) {
+                if (projectFileIndex.isInSourceContent(dir.getVirtualFile()) && JavaDirectoryService.getInstance().getPackage(dir) != null) {
+                    visible = true;
+                    break;
+                }
+            }
+        }
 
-		presentation.setEnabledAndVisible(visible);
-	}
+        presentation.setEnabledAndVisible(visible);
+    }
 }

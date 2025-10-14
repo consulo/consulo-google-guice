@@ -19,34 +19,29 @@ package com.sixrr.guiceyidea.intentions;
 import consulo.codeEditor.Editor;
 import consulo.language.psi.PsiElement;
 import consulo.language.psi.PsiFile;
+import consulo.localize.LocalizeValue;
 import consulo.project.Project;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
-public abstract class MutablyNamedIntention extends Intention
-{
-	private String text = null;
+public abstract class MutablyNamedIntention extends Intention {
+    private LocalizeValue text = LocalizeValue.of();
 
-	protected abstract String getTextForElement(@Nullable PsiElement element);
+    protected abstract LocalizeValue getTextForElement(@Nullable PsiElement element);
 
-	@Nonnull
-	public String getText()
-	{
-		if(text == null)
-		{
-			text = getTextForElement(null);
-		}
-		return text;
-	}
+    @Nonnull
+    public LocalizeValue getText() {
+        if (text == null) {
+            text = getTextForElement(null);
+        }
+        return text;
+    }
 
-	public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file)
-	{
-		final PsiElement element = findMatchingElement(file, editor);
-		if(element != null)
-		{
-			text = getTextForElement(element);
-		}
-		return element != null;
-	}
+    public boolean isAvailable(@Nonnull Project project, Editor editor, PsiFile file) {
+        final PsiElement element = findMatchingElement(file, editor);
+        if (element != null) {
+            text = getTextForElement(element);
+        }
+        return element != null;
+    }
 }

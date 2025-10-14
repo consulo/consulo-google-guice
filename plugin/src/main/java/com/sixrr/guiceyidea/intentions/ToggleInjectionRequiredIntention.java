@@ -20,53 +20,59 @@ import com.intellij.java.language.psi.PsiAnnotation;
 import com.intellij.java.language.psi.PsiAnnotationMemberValue;
 import com.intellij.java.language.psi.PsiExpression;
 import com.intellij.java.language.psi.PsiLiteralExpression;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.MutationUtils;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.editor.intention.IntentionMetaData;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.IncorrectOperationException;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 @ExtensionImpl
 @IntentionMetaData(ignoreId = "google.guice.toggle.injection.required", categories = {"Java", "Google Guice"}, fileExtensions = "java")
-public class ToggleInjectionRequiredIntention extends MutablyNamedIntention{
-    protected String getTextForElement(@Nullable PsiElement element){
+public class ToggleInjectionRequiredIntention extends MutablyNamedIntention {
+    @Override
+    protected LocalizeValue getTextForElement(@Nullable PsiElement element) {
         final PsiAnnotation annotation = (PsiAnnotation) element;
         final PsiAnnotationMemberValue value = annotation == null ? null : annotation.findAttributeValue("optional");
-        if(value == null){
-            return GuiceyIDEABundle.message("make.injection.optional");
+        if (value == null) {
+            return GoogleGuiceLocalize.makeInjectionOptional();
         }
-        if(value instanceof PsiLiteralExpression){
-            if(value.getText().equals("false")){
-                return GuiceyIDEABundle.message("make.injection.optional");
-            } else{
-                return GuiceyIDEABundle.message("make.injection.mandatory");
+        if (value instanceof PsiLiteralExpression) {
+            if (value.getText().equals("false")) {
+                return GoogleGuiceLocalize.makeInjectionOptional();
+            }
+            else {
+                return GoogleGuiceLocalize.makeInjectionMandatory();
             }
         }
-        return GuiceyIDEABundle.message("toggle.required");
+        return GoogleGuiceLocalize.toggleRequired();
     }
 
+    @Override
     @Nonnull
-    protected PsiElementPredicate getElementPredicate(){
+    protected PsiElementPredicate getElementPredicate() {
         return new ToggleInjectionRequiredPredicate();
     }
 
-    protected void processIntention(@Nonnull PsiElement element) throws IncorrectOperationException
-	{
+    @Override
+    protected void processIntention(@Nonnull PsiElement element) throws IncorrectOperationException {
         final PsiAnnotation annotation = (PsiAnnotation) element;
         final PsiAnnotationMemberValue value = annotation.findAttributeValue("optional");
-        if(value == null){
+        if (value == null) {
             MutationUtils.replaceAnnotation(annotation, "@com.google.inject.Inject(optional = true)");
-        } else if(value instanceof PsiLiteralExpression){
-            if(value.getText().equals("false")){
+        }
+        else if (value instanceof PsiLiteralExpression) {
+            if (value.getText().equals("false")) {
                 MutationUtils.replaceAnnotation(annotation, "@com.google.inject.Inject(optional = true)");
-            } else{
+            }
+            else {
                 MutationUtils.replaceAnnotation(annotation, "@com.google.inject.Inject");
             }
-        } else{
+        }
+        else {
             MutationUtils.negateExpression((PsiExpression) value);
         }
     }

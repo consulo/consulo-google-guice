@@ -17,15 +17,15 @@
 package com.sixrr.guiceyidea.inspections;
 
 import com.intellij.java.language.psi.*;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.editor.inspection.LocalQuickFix;
 import consulo.language.editor.inspection.ProblemDescriptor;
 import consulo.language.psi.PsiElement;
 import consulo.language.util.IncorrectOperationException;
+import consulo.localize.LocalizeValue;
 import consulo.logging.Logger;
 import consulo.project.Project;
-
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -35,7 +35,7 @@ public class PointlessBindingInspection extends BaseInspection{
 
     @Nonnull
     protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("pointless.binding.problem.descriptor");
+        return GoogleGuiceLocalize.pointlessBindingProblemDescriptor().get();
     }
 
     public BaseInspectionVisitor buildVisitor(){
@@ -47,15 +47,16 @@ public class PointlessBindingInspection extends BaseInspection{
         return new DeleteBindingFix();
     }
 
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return GoogleGuiceLocalize.pointlessBindingDisplayName();
+    }
+
     private static class DeleteBindingFix implements LocalQuickFix{
         @Nonnull
-        public String getName(){
-            return GuiceyIDEABundle.message("delete.binding");
-        }
-
-        @Nonnull
-        public String getFamilyName(){
-            return "";
+        public LocalizeValue getName(){
+            return GoogleGuiceLocalize.deleteBinding();
         }
 
         @SuppressWarnings({"HardCodedStringLiteral"})

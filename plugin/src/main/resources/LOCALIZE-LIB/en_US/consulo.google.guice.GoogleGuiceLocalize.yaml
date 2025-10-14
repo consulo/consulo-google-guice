@@ -10,6 +10,10 @@ conflicting.annotations.display.name:
     text: Conflicting Guice annotations
 conflicting.annotations.problem.descriptor:
     text: 'Annotation #ref conflicts with other declared annotations #loc'
+delete.binding:
+    text: Delete binding
+guice.inspection.group.name:
+    text: Guice Inspections
 guice.intentions:
     text: Guice
 inject.of.non.public.field.problem.descriptor:

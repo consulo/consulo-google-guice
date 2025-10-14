@@ -17,12 +17,12 @@
 package com.sixrr.guiceyidea.inspections;
 
 import com.intellij.java.language.psi.*;
-import com.sixrr.guiceyidea.GuiceyIDEABundle;
 import com.sixrr.guiceyidea.utils.AnnotationUtils;
 import com.sixrr.guiceyidea.utils.GuiceUtils;
 import consulo.annotation.component.ExtensionImpl;
+import consulo.google.guice.localize.GoogleGuiceLocalize;
 import consulo.language.psi.PsiElement;
-
+import consulo.localize.LocalizeValue;
 import jakarta.annotation.Nonnull;
 
 @ExtensionImpl
@@ -30,7 +30,13 @@ public class UninstantiableImplementedByClassInspection extends BaseInspection{
 
     @Nonnull
     protected String buildErrorString(Object... infos){
-        return GuiceyIDEABundle.message("uninstantiable.implemented.by.class.problem.descriptor");
+        return GoogleGuiceLocalize.uninstantiableImplementedByClassProblemDescriptor().get();
+    }
+
+    @Nonnull
+    @Override
+    public LocalizeValue getDisplayName() {
+        return GoogleGuiceLocalize.uninstantiableBindingDisplayName();
     }
 
     public BaseInspectionVisitor buildVisitor(){
