@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  - Copyright 2013-2017 consulo.io
+  - Copyright 2013-2025 consulo.io
   -
   - Licensed under the Apache License, Version 2.0 (the "License");
   - you may not use this file except in compliance with the License.
@@ -32,7 +32,7 @@
     <repositories>
         <repository>
             <id>consulo</id>
-            <url>https://maven.consulo.io/repository/snapshots/</url>
+            <url>https://maven.consulo.dev/repository/snapshots/</url>
             <snapshots>
                 <enabled>true</enabled>
                 <updatePolicy>interval:60</updatePolicy>
