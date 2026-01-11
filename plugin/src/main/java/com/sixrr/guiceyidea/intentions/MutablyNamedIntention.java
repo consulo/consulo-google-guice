@@ -25,7 +25,7 @@ import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
 public abstract class MutablyNamedIntention extends Intention {
-    private LocalizeValue text = LocalizeValue.of();
+    private LocalizeValue text = LocalizeValue.empty();
 
     protected abstract LocalizeValue getTextForElement(@Nullable PsiElement element);
 
