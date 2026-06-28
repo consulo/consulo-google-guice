@@ -1,0 +1,15 @@
+{
+  "lockVersion" : 1,
+  "project" : "consulo-google-guice",
+  "projectVersion" : "master",
+  "sourceLocale" : "en-US",
+  "generatedAt" : "2026-06-28T13:07:02.461056246Z",
+  "documents" : {
+    "consulo.google.guice.GoogleGuiceLocalize" : {
+      "source" : {
+        "revision" : 1,
+        "sig" : "9771d8028d16377abaf9d91b61706298"
+      }
+    }
+  }
+}
