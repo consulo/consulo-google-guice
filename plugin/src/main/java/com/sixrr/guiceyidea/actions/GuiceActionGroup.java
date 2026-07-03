@@ -28,24 +28,23 @@ import consulo.module.Module;
 import consulo.module.content.ProjectFileIndex;
 import consulo.module.content.ProjectRootManager;
 import consulo.project.Project;
-import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnActionEvent;
+import consulo.ui.ex.action.AnActionWithSyncUpdate;
 import consulo.ui.ex.action.DefaultActionGroup;
 import consulo.ui.ex.action.Presentation;
 import jakarta.annotation.Nonnull;
 
-public class GuiceActionGroup extends DefaultActionGroup {
+public class GuiceActionGroup extends DefaultActionGroup implements AnActionWithSyncUpdate {
     public GuiceActionGroup() {
         super(GoogleGuiceLocalize.actionGroupGuiceTitle(), GoogleGuiceLocalize.actionGroupGuiceDescription(), GoogleGuiceIconGroup.google_small());
         setPopup(true);
     }
 
-    @RequiredUIAccess
     @Override
     public void update(@Nonnull AnActionEvent e) {
-        final Module module = e.getData(LangDataKeys.MODULE);
+        final Module module = e.getData(Module.KEY);
         final IdeView view = e.getData(IdeView.KEY);
-        final Project project = e.getData(LangDataKeys.PROJECT);
+        final Project project = e.getData(Project.KEY);
         final Presentation presentation = e.getPresentation();
 
         boolean visible = false;
