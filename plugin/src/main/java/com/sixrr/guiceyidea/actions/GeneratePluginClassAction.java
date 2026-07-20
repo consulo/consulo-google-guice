@@ -32,7 +32,10 @@ import consulo.project.Project;
 import consulo.ui.annotation.RequiredUIAccess;
 import consulo.ui.ex.action.AnActionEvent;
 import consulo.ui.ex.action.Presentation;
+import consulo.ui.ex.action.coroutine.ActionSafeReadLock;
 import consulo.ui.image.Image;
+import consulo.util.concurrent.coroutine.Coroutine;
+import consulo.util.concurrent.coroutine.step.CallSubroutine;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 
@@ -75,32 +78,33 @@ public abstract class GeneratePluginClassAction extends CreateElementActionBase 
         return null;
     }
 
-    @RequiredUIAccess
     @Override
-    public void update(@Nonnull AnActionEvent e) {
-        super.update(e);
-        final Presentation presentation = e.getPresentation();
-        if (!presentation.isEnabled()) {
-            return;
-        }
-        final IdeView view = e.getData(IdeView.KEY);
-        final Project project = e.getData(LangDataKeys.PROJECT);
-        if (view == null || project == null) {
-            presentation.setEnabled(false);
-            presentation.setVisible(false);
-            return;
-        }
-        final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
-        final PsiDirectory[] dirs = view.getDirectories();
-        for (PsiDirectory dir : dirs) {
-            if (projectFileIndex.isInSourceContent(dir.getVirtualFile()) && JavaDirectoryService.getInstance().getPackage(dir) != null) {
-                presentation.setEnabled(true);
-                presentation.setVisible(true);
-                return;
-            }
-        }
+    public Coroutine<?, ?> updateAsync(AnActionEvent e) {
+        return CallSubroutine.call(() -> super.updateAsync(e))
+            .toCoroutine()
+            .then(ActionSafeReadLock.run(e, presentation -> {
+                if (!presentation.isEnabled()) {
+                    return;
+                }
+                final IdeView view = e.getData(IdeView.KEY);
+                final Project project = e.getData(LangDataKeys.PROJECT);
+                if (view == null || project == null) {
+                    presentation.setEnabled(false);
+                    presentation.setVisible(false);
+                    return;
+                }
+                final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
+                final PsiDirectory[] dirs = view.getDirectories();
+                for (PsiDirectory dir : dirs) {
+                    if (projectFileIndex.isInSourceContent(dir.getVirtualFile()) && JavaDirectoryService.getInstance().getPackage(dir) != null) {
+                        presentation.setEnabled(true);
+                        presentation.setVisible(true);
+                        return;
+                    }
+                }
 
-        presentation.setEnabled(false);
-        presentation.setVisible(false);
+                presentation.setEnabled(false);
+                presentation.setVisible(false);
+            }));
     }
 }
