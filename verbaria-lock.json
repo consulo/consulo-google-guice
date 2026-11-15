@@ -3,12 +3,11 @@
   "project" : "consulo-google-guice",
   "projectVersion" : "master",
   "sourceLocale" : "en-US",
-  "generatedAt" : "2026-06-28T13:07:02.461056246Z",
+  "generatedAt" : "2026-11-15T12:49:24.815982991Z",
   "documents" : {
     "consulo.google.guice.GoogleGuiceLocalize" : {
       "source" : {
-        "revision" : 1,
-        "sig" : "9771d8028d16377abaf9d91b61706298"
+        "sig" : "3d82d613c61deb06c392ed40a2fc4d8d"
       }
     }
   }
