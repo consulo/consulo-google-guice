@@ -21,7 +21,6 @@ import consulo.fileTemplate.FileTemplate;
 import consulo.fileTemplate.FileTemplateManager;
 import consulo.fileTemplate.FileTemplateUtil;
 import consulo.ide.action.CreateElementActionBase;
-import consulo.language.editor.LangDataKeys;
 import consulo.language.editor.util.IdeView;
 import consulo.language.psi.PsiDirectory;
 import consulo.language.psi.PsiElement;
@@ -83,16 +82,19 @@ public abstract class GeneratePluginClassAction extends CreateElementActionBase 
         return CallSubroutine.call(() -> super.updateAsync(e))
             .toCoroutine()
             .then(ActionSafeReadLock.run(e, presentation -> {
-                if (!presentation.isEnabled()) {
-                    return;
+                // a presentation the base class update disabled is left as it is, and skips the part under the lock
+                if (presentation.isEnabled() && e.getData(Project.KEY) == null) {
+                    presentation.setEnabled(false);
+                    presentation.setVisible(false);
                 }
+            }, presentation -> {
                 final IdeView view = e.getData(IdeView.KEY);
-                final Project project = e.getData(LangDataKeys.PROJECT);
-                if (view == null || project == null) {
+                if (view == null) {
                     presentation.setEnabled(false);
                     presentation.setVisible(false);
                     return;
                 }
+                final Project project = e.getRequiredData(Project.KEY);
                 final ProjectFileIndex projectFileIndex = ProjectRootManager.getInstance(project).getFileIndex();
                 final PsiDirectory[] dirs = view.getDirectories();
                 for (PsiDirectory dir : dirs) {
